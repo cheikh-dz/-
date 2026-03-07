@@ -1,1 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>العد التنازلي للعطلة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;900&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
 
+body {
+  background: #f5f0e8;
+  font-family: 'Tajawal', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1410;
+}
+
+.page {
+  text-align: center;
+  padding: 40px 24px;
+  max-width: 640px;
+  width: 100%;
+}
+
+/* Top line */
+.eyebrow {
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #b08a5a;
+  margin-bottom: 28px;
+}
+
+/* Big heading */
+h1 {
+  font-size: clamp(2rem, 6vw, 3.6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #1a1410;
+  margin-bottom: 6px;
+}
+
+.date-line {
+  font-size: .92rem;
+  font-weight: 300;
+  color: #a08060;
+  margin-bottom: 60px;
+  letter-spacing: .04em;
+}
+
+/* Countdown row */
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 56px;
+}
+
+.unit {
+  flex: 1;
+  max-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+/* Divider between units */
+.unit + .unit::before {
+  content: '';
+  position: absolute;
+  right: 0; top: 12px;
+  width: 1px; height: 70px;
+  background: #d4c5ae;
+}
+
+.num {
+  font-size: clamp(3rem, 9vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  color: #1a1410;
+  transition: color .3s;
+}
+
+/* Days get the accent color to signal "soon" */
+#d-num { color: #c0653a; }
+
+.lbl {
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: #b0987a;
+}
+
+/* Progress */
+.prog-wrap {
+  max-width: 420px;
+  margin: 0 auto 48px;
+}
+
+.prog-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  color: #b0987a;
+  margin-bottom: 10px;
+}
+
+#pct-txt { font-weight: 900; color: #c0653a; }
+
+.prog-track {
+  width: 100%;
+  height: 3px;
+  background: #ddd5c4;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.prog-bar {
+  height: 100%;
+  background: #c0653a;
+  border-radius: 10px;
+  transition: width 1s linear;
+}
+
+/* Bottom note */
+.note {
+  font-size: .82rem;
+  font-weight: 300;
+  color: #b0987a;
+  line-height: 1.9;
+}
+
+.note strong {
+  color: #1a1410;
+  font-weight: 500;
+}
+
+/* Arrived */
+#arrived {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: pop .5s cubic-bezier(.18,.89,.32,1.28);
+}
+#arrived.show { display: flex; }
+@keyframes pop {
+  from { transform: scale(.8); opacity: 0; }
+  to   { transform: scale(1);  opacity: 1; }
+}
+
+/* Number change */
+@keyframes tick {
+  0%  { opacity: 0; transform: translateY(-8px); }
+  100%{ opacity: 1; transform: translateY(0);    }
+}
+.ticking { animation: tick .25s ease; }
+
+@media (max-width: 480px) {
+  .unit { max-width: 80px; }
+  .lbl  { font-size: .65rem; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <p class="eyebrow">العد التنازلي</p>
+
+  <h1>متبقي للعطلة</h1>
+  <p class="date-line">الخميس ١٢ مارس ٢٠٢٦ &nbsp;·&nbsp; ١٠:٣٠ صباحاً</p>
+
+  <div class="countdown" id="cdwrap">
+    <div class="unit">
+      <span class="num" id="d-num">00</span>
+      <span class="lbl">أيام</span>
+    </div>
+    <div class="unit">
+      <span class="num" id="h-num">00</span>
+      <span class="lbl">ساعات</span>
+    </div>
+    <div class="unit">
+      <span class="num" id="m-num">00</span>
+      <span class="lbl">دقائق</span>
+    </div>
+    <div class="unit">
+      <span class="num" id="s-num">00</span>
+      <span class="lbl">ثواني</span>
+    </div>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-header">
+      <span>البداية</span>
+      <span id="pct-txt">0%</span>
+      <span>العطلة 🏖️</span>
+    </div>
+    <div class="prog-track">
+      <div class="prog-bar" id="pbar" style="width:0%"></div>
+    </div>
+  </div>
+
+  <p class="note" id="note">
+    <strong>قريباً جداً</strong> — استعد لعطلتك المستحقة 🌴
+  </p>
+
+  <div id="arrived">
+    <p style="font-size:3rem">🎉</p>
+    <h1>العطلة بدأت!</h1>
+    <p class="note">استمتع بكل لحظة 🌴</p>
+  </div>
+
+</div>
+
+<script>
+const TARGET = new Date(2026, 2, 12, 10, 30, 0);
+const START  = Date.now();
+const TOTAL  = TARGET.getTime() - START;
+const pad    = n => String(n).padStart(2,'0');
+let prev = {};
+
+const notes = [
+  '<strong>قريباً جداً</strong> — استعد لعطلتك المستحقة 🌴',
+  'كل ثانية تمر تقربك من الراحة ☀️',
+  'الخميس القادم — يوم تستحقه 🏖️',
+  'لا شيء يوقف الوقت عن السير نحو العطلة ⏳',
+];
+let ni = 0;
+const noteEl = document.getElementById('note');
+setInterval(() => {
+  noteEl.style.opacity = 0;
+  setTimeout(() => {
+    ni = (ni + 1) % notes.length;
+    noteEl.innerHTML = notes[ni];
+    noteEl.style.transition = 'opacity .5s';
+    noteEl.style.opacity = 1;
+  }, 400);
+}, 6000);
+
+function tick(el) {
+  el.classList.remove('ticking');
+  void el.offsetWidth;
+  el.classList.add('ticking');
+}
+
+function update() {
+  const diff = TARGET.getTime() - Date.now();
+  if (diff <= 0) {
+    document.getElementById('cdwrap').style.display = 'none';
+    document.querySelector('.prog-wrap').style.display = 'none';
+    noteEl.style.display = 'none';
+    document.getElementById('arrived').classList.add('show');
+    return;
+  }
+
+  const s  = Math.floor(diff / 1000);
+  const dd = Math.floor(s / 86400);
+  const hh = Math.floor((s % 86400) / 3600);
+  const mm = Math.floor((s % 3600) / 60);
+  const ss = s % 60;
+
+  const vals = { d: dd, h: hh, m: mm, s: ss };
+  for (const [k, v] of Object.entries(vals)) {
+    const el  = document.getElementById(k + '-num');
+    const str = pad(v);
+    if (str !== prev[k]) { el.textContent = str; tick(el); prev[k] = str; }
+  }
+
+  const pct = Math.min(100, ((Date.now() - START) / TOTAL) * 100);
+  document.getElementById('pbar').style.width   = pct.toFixed(2) + '%';
+  document.getElementById('pct-txt').textContent = pct.toFixed(1) + '%';
+}
+
+update();
+setInterval(update, 1000);
+</script>
+</body>
+</html>
