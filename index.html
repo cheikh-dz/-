@@ -1,412 +1,474 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>جدول الاحتمالات</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+  <title>عيد المرأة — رتيبة 🌸</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: #7a5e25;
-      --dark: #0a0c10;
-      --dark-card: #111318;
-      --dark-border: #1e2330;
-      --text: #e8e4d8;
-      --muted: #7a7560;
+      --rose:  #e8476a;
+      --blush: #f7a8bb;
+      --peach: #fdd5c0;
+      --cream: #fff8f2;
+      --mauve: #9b4f6e;
+      --gold:  #d4a057;
+      --deep:  #2d1a26;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
     body {
-      background-color: var(--dark);
-      color: var(--text);
-      font-family: 'Cairo', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      overflow-x: hidden;
+      font-family:'Tajawal', sans-serif;
+      background:var(--cream); color:var(--deep);
+      overflow-x:hidden; min-height:100vh;
     }
 
-    /* Subtle noise + radial glow bg */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
+    /* BG */
+    .bg-canvas {
+      position:fixed; inset:0; z-index:0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 0;
+        radial-gradient(ellipse at 15% 15%, #fde8f0 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 80%, #fce4d4 0%, transparent 50%),
+        radial-gradient(ellipse at 55% 5%,  #f9d0e3 0%, transparent 40%),
+        var(--cream);
     }
 
-    .container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 680px;
+    /* FLOATING PETALS */
+    .float-el {
+      position:fixed; pointer-events:none; z-index:1;
+      animation:floatUp linear infinite; opacity:0;
+    }
+    @keyframes floatUp {
+      0%   { transform:translateY(110vh) rotate(0deg);   opacity:0; }
+      5%   { opacity:.75; }
+      95%  { opacity:.45; }
+      100% { transform:translateY(-10vh) rotate(720deg); opacity:0; }
     }
 
-    /* Header */
-    .header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      opacity: 0;
-      animation: fadeDown 0.7s ease forwards 0.1s;
+    /* SPARKLES */
+    .sp {
+      position:fixed; border-radius:50%; pointer-events:none; z-index:1;
+      animation:twinkle ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%,100%{ opacity:0; transform:scale(.4); }
+      50%    { opacity:1; transform:scale(1.5); }
     }
 
-    .header .eyebrow {
-      font-family: 'Amiri', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
+    /* CONFETTI */
+    .conf {
+      position:fixed; border-radius:3px; pointer-events:none; z-index:999;
+      animation:confFall linear forwards;
+    }
+    @keyframes confFall {
+      0%  { transform:translateY(-40px) rotate(0deg); opacity:1; }
+      100%{ transform:translateY(105vh) rotate(900deg); opacity:0; }
     }
 
-    .header h1 {
-      font-size: clamp(1.8rem, 5vw, 2.8rem);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.2;
+    /* CURSOR HEARTS */
+    .cursor-heart {
+      position:fixed; pointer-events:none; z-index:999;
+      font-size:1.4rem; animation:heartFloat 1.2s ease forwards;
+    }
+    @keyframes heartFloat {
+      0%  { opacity:1; transform:translateY(0) scale(1); }
+      100%{ opacity:0; transform:translateY(-75px) scale(.3); }
     }
 
-    .header h1 span {
-      color: var(--gold);
+    /* WRAPPER */
+    .wrapper {
+      position:relative; z-index:2;
+      display:flex; flex-direction:column; align-items:center;
+      padding:36px 20px 110px;
     }
 
-    .header .subtitle {
-      margin-top: 0.7rem;
-      font-size: 0.92rem;
-      color: var(--muted);
-      font-weight: 300;
+    /* RIBBON */
+    .ribbon {
+      background:linear-gradient(90deg, var(--mauve), var(--rose), var(--mauve));
+      color:#fff; font-size:1rem; font-weight:700;
+      letter-spacing:.12em; padding:11px 46px;
+      border-radius:100px; margin-bottom:48px;
+      box-shadow:0 4px 24px rgba(155,79,110,.35);
+      opacity:0; animation:slideDown .8s ease forwards .3s;
     }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin: 1.6rem 0;
+    /* HERO */
+    .hero { text-align:center; max-width:720px; width:100%; }
+    .greeting-small {
+      font-size:1.3rem; color:var(--mauve); font-weight:300;
+      letter-spacing:.08em; margin-bottom:10px;
+      opacity:0; animation:slideDown .8s ease forwards .5s;
     }
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to left, transparent, var(--gold-dim));
+    .name-display {
+      font-family:'Playfair Display', serif; font-style:italic;
+      font-size:clamp(4.5rem,18vw,9.5rem);
+      color:var(--rose); line-height:.9;
+      opacity:0; animation:slideDown 1s ease forwards .7s;
+      display:inline-block;
     }
-    .divider::after {
-      background: linear-gradient(to right, transparent, var(--gold-dim));
+    .name-display::after {
+      content:''; display:block; height:5px;
+      background:linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-top:12px; transform:scaleX(0);
+      animation:expand .8s ease forwards 1.5s;
     }
-    .divider-gem {
-      width: 8px; height: 8px;
-      background: var(--gold);
-      transform: rotate(45deg);
-      flex-shrink: 0;
-    }
+    @keyframes expand { to { transform:scaleX(1); } }
 
-    /* Card */
+    /* MAIN CARD */
     .card {
-      background: var(--dark-card);
-      border: 1px solid var(--dark-border);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow:
-        0 0 0 1px rgba(201,168,76,0.08),
-        0 30px 80px rgba(0,0,0,0.6),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-      opacity: 0;
-      animation: fadeUp 0.7s ease forwards 0.3s;
+      margin-top:46px;
+      background:rgba(255,255,255,.8); backdrop-filter:blur(18px);
+      border:1.5px solid rgba(232,71,106,.18); border-radius:28px;
+      padding:50px 52px 44px; max-width:680px; width:100%;
+      box-shadow:0 20px 60px rgba(155,79,110,.12);
+      opacity:0; animation:slideUp 1s ease forwards 1s;
+      position:relative; overflow:hidden;
+    }
+    .card::before {
+      content:'♀'; position:absolute; top:-22px; left:-22px;
+      font-size:180px; color:rgba(232,71,106,.05);
+      font-family:serif; pointer-events:none;
+    }
+    .card-title {
+      font-weight:900; font-size:1.9rem;
+      color:var(--mauve); margin-bottom:22px; line-height:1.5;
+    }
+    .card-title span { color:var(--rose); }
+    .card-text {
+      font-size:1.18rem; font-weight:300; line-height:2.1; color:#4a2d3e;
     }
 
-    /* Table head */
-    .table-head {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 100%);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
-      padding: 1.1rem 2rem;
+    /* QUOTE CAROUSEL */
+    .quote-carousel {
+      margin-top:52px; max-width:680px; width:100%;
+      background:rgba(255,255,255,.75); backdrop-filter:blur(14px);
+      border:1.5px solid rgba(232,71,106,.15); border-radius:28px;
+      padding:42px 46px 34px;
+      box-shadow:0 14px 44px rgba(155,79,110,.1);
+      text-align:center;
+      opacity:0; animation:slideUp 1s ease forwards 1.2s;
     }
-
-    .table-head span {
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-      text-transform: uppercase;
+    .q-label {
+      font-size:.8rem; font-weight:700; letter-spacing:.15em;
+      color:var(--gold); margin-bottom:12px;
     }
-
-    .table-head span:last-child {
-      text-align: left;
+    .q-mark {
+      font-family:'Playfair Display', serif; font-size:5.5rem;
+      color:var(--blush); line-height:.35; display:block; margin-bottom:16px;
     }
-
-    /* Rows */
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      padding: 0 2rem;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
-      cursor: default;
-      transition: background 0.25s ease;
-      opacity: 0;
-      animation: slideIn 0.5s ease forwards;
+    .q-text {
+      font-family:'Playfair Display', serif; font-style:italic;
+      font-size:1.35rem; color:var(--mauve); line-height:1.85;
+      min-height:90px; transition:opacity .4s;
     }
-
-    .row:last-child { border-bottom: none; }
-
-    .row:hover {
-      background: rgba(201,168,76,0.05);
+    .q-text.fade-out { opacity:0; }
+    .q-author {
+      margin-top:14px; font-size:.9rem;
+      letter-spacing:.1em; color:var(--gold); font-weight:700;
     }
-
-    .row:hover .bar-fill {
-      filter: brightness(1.3);
+    .q-dots {
+      display:flex; justify-content:center; gap:10px; margin-top:22px;
     }
-
-    .row-inner {
-      display: flex;
-      align-items: center;
-      padding: 1.05rem 0;
-      gap: 1rem;
+    .q-dot {
+      width:11px; height:11px; border-radius:50%;
+      background:var(--blush); border:none; cursor:pointer;
+      transition:background .3s, transform .3s;
     }
+    .q-dot.active { background:var(--rose); transform:scale(1.35); }
 
-    /* Rank badge */
-    .rank {
-      font-family: 'Amiri', serif;
-      font-size: 1.45rem;
-      font-weight: 700;
-      color: #fff;
-      min-width: 2.5rem;
-      line-height: 1;
+    /* BADGES */
+    .badges {
+      display:flex; flex-wrap:wrap; gap:14px;
+      justify-content:center; margin-top:52px; max-width:680px;
+      opacity:0; animation:slideUp 1s ease forwards 1.4s;
     }
+    .badge {
+      background:white; border:2.5px solid var(--blush);
+      border-radius:100px; padding:12px 26px;
+      font-size:1.05rem; font-weight:700; color:var(--mauve);
+      display:flex; align-items:center; gap:9px;
+      box-shadow:0 4px 14px rgba(232,71,106,.1);
+      cursor:pointer; user-select:none;
+      transition:transform .22s, box-shadow .22s, background .22s, color .22s;
+    }
+    .badge:hover {
+      transform:translateY(-5px) scale(1.07);
+      box-shadow:0 10px 28px rgba(232,71,106,.22);
+    }
+    .badge.popped {
+      background:linear-gradient(135deg, var(--rose), var(--mauve));
+      color:white; border-color:transparent;
+    }
+    .badge .icon { font-size:1.2rem; }
 
-    .fraction {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: rgba(255,255,255,0.7);
-      letter-spacing: 0.02em;
+    /* WISH CARDS */
+    .wishes-label {
+      margin-top:54px; font-size:1.1rem; color:var(--mauve); font-weight:700;
+      text-align:center;
+      opacity:0; animation:slideUp .8s ease forwards 1.5s;
     }
+    .wishes-grid {
+      display:grid; grid-template-columns:repeat(auto-fill, minmax(185px,1fr));
+      gap:18px; margin-top:22px; max-width:680px; width:100%;
+      opacity:0; animation:slideUp 1s ease forwards 1.65s;
+    }
+    .wish-card {
+      background:rgba(255,255,255,.85); backdrop-filter:blur(12px);
+      border:1.5px solid rgba(232,71,106,.18); border-radius:24px;
+      padding:30px 22px 24px; text-align:center;
+      box-shadow:0 8px 28px rgba(155,79,110,.1);
+      cursor:pointer; transition:transform .25s, box-shadow .25s;
+      position:relative; overflow:hidden;
+    }
+    .wish-card:hover {
+      transform:translateY(-6px);
+      box-shadow:0 18px 44px rgba(155,79,110,.18);
+    }
+    .wish-card.revealed {
+      background:linear-gradient(135deg,#fde8f0,#fce4d4);
+    }
+    .wish-card .wc-icon { font-size:2.4rem; display:block; margin-bottom:10px; }
+    .wish-card .wc-title {
+      font-weight:900; font-size:1.05rem; color:var(--mauve); margin-bottom:6px;
+    }
+    .wish-card .wc-text {
+      font-size:.88rem; font-weight:300; color:#6a3a54; line-height:1.7;
+      max-height:0; overflow:hidden;
+      transition:max-height .5s ease, opacity .4s; opacity:0;
+    }
+    .wish-card.revealed .wc-text { max-height:130px; opacity:1; }
+    .wish-card .tap-hint { font-size:.73rem; color:var(--blush); margin-top:8px; }
+    .wish-card.revealed .tap-hint { display:none; }
 
-    /* Probability cell */
-    .prob-cell {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 1.05rem 0;
+    /* CELEBRATE BTN */
+    .celebrate-btn {
+      margin-top:56px;
+      background:linear-gradient(135deg, var(--rose), var(--mauve));
+      color:white; border:none; border-radius:100px;
+      padding:20px 56px; font-size:1.25rem; font-weight:900;
+      font-family:'Tajawal', sans-serif; cursor:pointer;
+      letter-spacing:.06em;
+      box-shadow:0 12px 38px rgba(232,71,106,.42);
+      transition:transform .2s, box-shadow .2s;
+      opacity:0; animation:slideUp 1s ease forwards 1.85s;
     }
+    .celebrate-btn:hover {
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 18px 50px rgba(232,71,106,.52);
+    }
+    .celebrate-btn:active { transform:scale(.97); }
 
-    .prob-value {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--gold-light);
-      text-align: left;
-    }
-
-    .bar-track {
-      height: 5px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .bar-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(to left, var(--gold-light), var(--gold-dim));
-      transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
-      width: 0;
-    }
-
-    /* Row stagger delays */
-    .row:nth-child(1) { animation-delay: 0.45s; }
-    .row:nth-child(2) { animation-delay: 0.55s; }
-    .row:nth-child(3) { animation-delay: 0.65s; }
-    .row:nth-child(4) { animation-delay: 0.75s; }
-    .row:nth-child(5) { animation-delay: 0.85s; }
-    .row:nth-child(6) { animation-delay: 0.95s; }
-    .row:nth-child(7) { animation-delay: 1.05s; }
-    .row:nth-child(8) { animation-delay: 1.15s; }
-    .row:nth-child(9) { animation-delay: 1.25s; }
-
-    /* Top row highlight */
-    .row.top {
-      background: linear-gradient(90deg, rgba(201,168,76,0.06) 0%, transparent 100%);
-    }
-    .row.top .rank {
-      color: var(--gold);
-    }
-    .row.top .fraction {
-      color: rgba(255,255,255,0.9);
-    }
-
-    /* Footer */
+    /* FOOTER */
     .footer {
-      text-align: center;
-      margin-top: 1.8rem;
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 1.4s;
+      margin-top:72px; text-align:center;
+      font-size:.9rem; color:var(--blush); letter-spacing:.12em;
+      opacity:0; animation:fadeIn 1s ease forwards 2.2s;
     }
 
-    /* Animations */
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ANIMATIONS */
+    @keyframes slideDown {
+      from{ opacity:0; transform:translateY(-26px); }
+      to  { opacity:1; transform:translateY(0); }
     }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    @keyframes slideUp {
+      from{ opacity:0; transform:translateY(34px); }
+      to  { opacity:1; transform:translateY(0); }
     }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(14px); }
-      to   { opacity: 1; transform: translateX(0); }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+    @media(max-width:560px){
+      .card,.quote-carousel{padding:32px 24px 28px;}
+      .card-title{font-size:1.5rem;}
+      .q-text{font-size:1.12rem;}
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="bg-canvas"></div>
 
-  <div class="header">
-    <div class="eyebrow">توزيع الاحتمالات</div>
-    <h1>جدول <span>العلامات</span> والاحتمالات</h1>
-    <p class="subtitle">الاحتمالات التقريبية لكل علامة من أصل ٨</p>
-    <div class="divider"><div class="divider-gem"></div></div>
+<div class="wrapper">
+
+  <div class="ribbon">🌸 &nbsp; 8 مارس — اليوم العالمي للمرأة &nbsp; 🌸</div>
+
+  <div class="hero">
+    <p class="greeting-small">إلى الفتاة الرائعة</p>
+    <div class="name-display">رتيبة</div>
   </div>
 
+  <!-- CARD -->
   <div class="card">
-
-    <div class="table-head">
-      <span>العلامة</span>
-      <span>الاحتمال التقريبي</span>
-    </div>
-
-    <!-- Rows: value, fraction, percent -->
-    <div class="row top" data-pct="30">
-      <div class="row-inner">
-        <div class="rank">8</div>
-        <div class="fraction">8 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">30%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="35">
-      <div class="row-inner">
-        <div class="rank">7</div>
-        <div class="fraction">7 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">35%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="25">
-      <div class="row-inner">
-        <div class="rank">6</div>
-        <div class="fraction">6 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">25%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="6">
-      <div class="row-inner">
-        <div class="rank">5</div>
-        <div class="fraction">5 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">6%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="2">
-      <div class="row-inner">
-        <div class="rank">4</div>
-        <div class="fraction">4 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">2%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="1">
-      <div class="row-inner">
-        <div class="rank">3</div>
-        <div class="fraction">3 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">1%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="0.7">
-      <div class="row-inner">
-        <div class="rank">2</div>
-        <div class="fraction">2 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">0.7%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="0.2">
-      <div class="row-inner">
-        <div class="rank">1</div>
-        <div class="fraction">1 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">0.2%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
-    <div class="row" data-pct="0.1">
-      <div class="row-inner">
-        <div class="rank">0</div>
-        <div class="fraction">0 / 8</div>
-      </div>
-      <div class="prob-cell">
-        <div class="prob-value">0.1%</div>
-        <div class="bar-track"><div class="bar-fill"></div></div>
-      </div>
-    </div>
-
+    <h2 class="card-title">كل عام وأنتِ <span>نور ونبض</span> ✨</h2>
+    <p class="card-text">
+      في هذا اليوم المُضيء الذي يحتفي بكل فتاة تحمل في داخلها شعلةً لا تنطفئ —
+      نتوقف لنقول لكِ يا <strong>رتيبة</strong> بكل صدق:
+      وجودكِ في هذا العالم يُضيف إليه لوناً لا يُعوَّض ولا يُقلَّد.
+      أنتِ في بداية رحلة مليئة بالاكتشافات والأحلام الجريئة والقرارات الجميلة.
+      لا تُصغِّري من نفسكِ لتناسبي أي قالب — أنتِ الأصل، وكل الباقي نسخ. 💫
+    </p>
   </div>
 
-  <div class="footer">المجموع الكلي ≈ 100% &nbsp;·&nbsp; البيانات تقريبية</div>
+  <!-- QUOTE CAROUSEL -->
+  <div class="quote-carousel">
+    <p class="q-label">✦ اقتباس لكِ ✦</p>
+    <span class="q-mark">"</span>
+    <p class="q-text" id="qText">المرأة التي تعرف قيمتها لا تنتظر إذناً من أحد لتتألق.</p>
+    <p class="q-author" id="qAuthor">— لكِ يا رتيبة 🌹</p>
+    <div class="q-dots" id="qDots"></div>
+  </div>
 
+  <!-- BADGES -->
+  <div class="badges">
+    <div class="badge" onclick="popBadge(this)"><span class="icon">💪</span> قوية</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">🌺</span> مميّزة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">✨</span> لامعة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">📚</span> طموحة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">🦋</span> حرّة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">🌙</span> ساحرة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">🔥</span> شجاعة</div>
+    <div class="badge" onclick="popBadge(this)"><span class="icon">💎</span> انسانة ماشاء الله</div>
+  </div>
+
+  <!-- WISH CARDS -->
+  <p class="wishes-label">🎁 اضغطي على كل بطاقة لتكتشفي أمنيتك الخاصة</p>
+  <div class="wishes-grid">
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">🌟</span>
+      <div class="wc-title">النجاح</div>
+      <div class="wc-text">أتمنى لكِ نجاحاً يفوق كل توقعاتكِ في دراستكِ وكل ما تحلمين به.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">💖</span>
+      <div class="wc-title">السعادة</div>
+      <div class="wc-text">أتمنى أن تمتلئ حياتكِ بلحظات تجعلكِ تبتسمين من القلب كل يوم.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">🦋</span>
+      <div class="wc-title">الحرية</div>
+      <div class="wc-text">أتمنى أن تعيشي حياتكِ بأجنحة مفتوحة لا يُقيّدكِ خوف ولا يُوقفكِ أحد.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">🌺</span>
+      <div class="wc-title">الثقة</div>
+      <div class="wc-text">أتمنى أن تعرفي دائماً كم أنتِ كفوءة وجميلة ومستحقة بالضبط كما أنتِ.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">📖</span>
+      <div class="wc-title">الحكمة</div>
+      <div class="wc-text">أتمنى أن تعيشي تجارب تُعلّمكِ وأخطاءً تُقوّيكِ وانتصارات تُلهمكِ.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+    <div class="wish-card" onclick="revealCard(this)">
+      <span class="wc-icon">🌙</span>
+      <div class="wc-title">الهدوء</div>
+      <div class="wc-text">أتمنى أن تجدي دائماً لحظة صفاء تُعيدكِ إلى نفسكِ وسط كل الضوضاء.</div>
+      <div class="tap-hint">اضغطي لتكتشفي ✨</div>
+    </div>
+  </div>
+
+  <!-- CELEBRATE BUTTON -->
+  <button class="celebrate-btn" id="celebBtn" onclick="launchConfetti()">
+    🎉 &nbsp; احتفلي بنفسكِ يا رتيبة!
+  </button>
+
+  <div class="footer">✦ &nbsp; صُنع بالحب بمناسبة 8 مارس &nbsp; ✦</div>
 </div>
 
 <script>
-  // Animate bars after rows appear
-  const maxPct = 35;
+// ── PARTICLES ──
+const petalColors = ['#f7a8bb','#e8476a','#fdd5c0','#d4a057','#c96a8a','#f9d0e3'];
+for (let i=0;i<24;i++){
+  const p=document.createElement('div'); p.className='float-el';
+  const sz=Math.random()*18+7;
+  p.style.cssText=`width:${sz}px;height:${sz}px;background:${petalColors[~~(Math.random()*petalColors.length)]};left:${Math.random()*100}vw;bottom:-60px;animation-duration:${Math.random()*10+9}s;animation-delay:${Math.random()*14}s;border-radius:${Math.random()>.5?'50% 0 50% 0':'0 50% 0 50%'};`;
+  document.body.appendChild(p);
+}
+for (let i=0;i<20;i++){
+  const s=document.createElement('div'); s.className='sp';
+  const sz=Math.random()>.5?4:8;
+  s.style.cssText=`top:${Math.random()*100}vh;left:${Math.random()*100}vw;width:${sz}px;height:${sz}px;background:${Math.random()>.5?'#d4a057':'#e8476a'};animation-duration:${Math.random()*2+1.5}s;animation-delay:${Math.random()*3}s;`;
+  document.body.appendChild(s);
+}
 
-  function animateBars() {
-    document.querySelectorAll('.row').forEach((row, i) => {
-      const pct = parseFloat(row.dataset.pct);
-      const fill = row.querySelector('.bar-fill');
-      setTimeout(() => {
-        fill.style.width = (pct / maxPct * 100) + '%';
-      }, 500 + i * 100);
-    });
+// ── CURSOR HEARTS ──
+const heartEmojis=['💗','💕','🌸','✨','💖','🌺','💫'];
+document.addEventListener('click', e => {
+  if(e.target.closest('.badge,.wish-card,#celebBtn,.q-dot')) return;
+  const el=document.createElement('div'); el.className='cursor-heart';
+  el.textContent=heartEmojis[~~(Math.random()*heartEmojis.length)];
+  el.style.cssText=`left:${e.clientX-10}px;top:${e.clientY-10}px;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1300);
+});
+
+// ── MINI BURST ──
+function burst(el){
+  const rect=el.getBoundingClientRect();
+  for(let i=0;i<7;i++){
+    const s=document.createElement('div'); s.className='cursor-heart';
+    s.textContent=heartEmojis[~~(Math.random()*heartEmojis.length)];
+    s.style.cssText=`left:${rect.left+rect.width/2+Math.random()*80-40}px;top:${rect.top+Math.random()*20}px;font-size:${Math.random()*.9+.8}rem;`;
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1300);
   }
+}
 
-  window.addEventListener('load', animateBars);
+// ── QUOTES ──
+const quotes=[
+  {text:"المرأة التي تعرف قيمتها لا تنتظر إذناً من أحد لتتألق.", author:"— لكِ يا رتيبة 🌹"},
+  {text:"الفتاة التي تؤمن بنفسها تستطيع تغيير العالم من حولها.", author:"— عيدكِ مبارك 💐"},
+  {text:"لا تكوني نسخة من أحد — كوني النسخة الأولى والأخيرة من رتيبة.", author:"— بكل محبة 🌸"},
+  {text:"أحلامكِ ليست كبيرة على قدراتكِ، بل قدراتكِ لا تعرف حجمها بعد.", author:"— ثقي بنفسكِ ✨"},
+  {text:"الحياة جميلة تستحق العيش.", author:"— إلى رتيبة الجريئة 🔥"},
+];
+let qIdx=0;
+const qText=document.getElementById('qText');
+const qAuthor=document.getElementById('qAuthor');
+const qDots=document.getElementById('qDots');
+quotes.forEach((_,i)=>{
+  const d=document.createElement('button'); d.className='q-dot'+(i===0?' active':'');
+  d.onclick=()=>goQ(i); qDots.appendChild(d);
+});
+function goQ(idx){
+  qText.classList.add('fade-out');
+  setTimeout(()=>{
+    qIdx=idx; qText.textContent=quotes[idx].text; qAuthor.textContent=quotes[idx].author;
+    qText.classList.remove('fade-out');
+    document.querySelectorAll('.q-dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  },400);
+}
+setInterval(()=>goQ((qIdx+1)%quotes.length),4200);
+
+// ── BADGES ──
+function popBadge(el){
+  el.classList.toggle('popped');
+  if(el.classList.contains('popped')) burst(el);
+}
+
+// ── WISH CARDS ──
+function revealCard(el){
+  el.classList.toggle('revealed');
+  if(el.classList.contains('revealed')) burst(el);
+}
+
+// ── CONFETTI ──
+const confColors=['#e8476a','#f7a8bb','#d4a057','#9b4f6e','#fdd5c0','#c96a8a','#fff'];
+function launchConfetti(){
+  document.getElementById('celebBtn').textContent='🎊 كل عام وأنتِ بخير يا رتيبة!';
+  for(let i=0;i<130;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div'); c.className='conf';
+      const sz=Math.random()*11+5;
+      c.style.cssText=`width:${sz}px;height:${sz*(Math.random()>.5?1:2.6)}px;background:${confColors[~~(Math.random()*confColors.length)]};left:${Math.random()*100}vw;top:0;animation-duration:${Math.random()*2.5+1.5}s;animation-delay:${Math.random()*.6}s;border-radius:${Math.random()>.5?'50%':'3px'};`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),4800);
+    },i*16);
+  }
+}
 </script>
-
 </body>
 </html>
