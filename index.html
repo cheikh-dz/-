@@ -1,286 +1,412 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>العد التنازلي للعطلة</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;900&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>جدول الاحتمالات</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: #7a5e25;
+      --dark: #0a0c10;
+      --dark-card: #111318;
+      --dark-border: #1e2330;
+      --text: #e8e4d8;
+      --muted: #7a7560;
+    }
 
-body {
-  background: #f5f0e8;
-  font-family: 'Tajawal', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #1a1410;
-}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-.page {
-  text-align: center;
-  padding: 40px 24px;
-  max-width: 640px;
-  width: 100%;
-}
+    body {
+      background-color: var(--dark);
+      color: var(--text);
+      font-family: 'Cairo', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
 
-/* Top line */
-.eyebrow {
-  font-size: .78rem;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: #b08a5a;
-  margin-bottom: 28px;
-}
+    /* Subtle noise + radial glow bg */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
 
-/* Big heading */
-h1 {
-  font-size: clamp(2rem, 6vw, 3.6rem);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #1a1410;
-  margin-bottom: 6px;
-}
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 680px;
+    }
 
-.date-line {
-  font-size: .92rem;
-  font-weight: 300;
-  color: #a08060;
-  margin-bottom: 60px;
-  letter-spacing: .04em;
-}
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeDown 0.7s ease forwards 0.1s;
+    }
 
-/* Countdown row */
-.countdown {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0;
-  margin-bottom: 56px;
-}
+    .header .eyebrow {
+      font-family: 'Amiri', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
 
-.unit {
-  flex: 1;
-  max-width: 130px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-}
+    .header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+    }
 
-/* Divider between units */
-.unit + .unit::before {
-  content: '';
-  position: absolute;
-  right: 0; top: 12px;
-  width: 1px; height: 70px;
-  background: #d4c5ae;
-}
+    .header h1 span {
+      color: var(--gold);
+    }
 
-.num {
-  font-size: clamp(3rem, 9vw, 5rem);
-  font-weight: 900;
-  line-height: 1;
-  color: #1a1410;
-  transition: color .3s;
-}
+    .header .subtitle {
+      margin-top: 0.7rem;
+      font-size: 0.92rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
 
-/* Days get the accent color to signal "soon" */
-#d-num { color: #c0653a; }
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1.6rem 0;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to left, transparent, var(--gold-dim));
+    }
+    .divider::after {
+      background: linear-gradient(to right, transparent, var(--gold-dim));
+    }
+    .divider-gem {
+      width: 8px; height: 8px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
 
-.lbl {
-  font-size: .72rem;
-  font-weight: 500;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: #b0987a;
-}
+    /* Card */
+    .card {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(201,168,76,0.08),
+        0 30px 80px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.3s;
+    }
 
-/* Progress */
-.prog-wrap {
-  max-width: 420px;
-  margin: 0 auto 48px;
-}
+    /* Table head */
+    .table-head {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.04) 100%);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.1rem 2rem;
+    }
 
-.prog-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: .75rem;
-  color: #b0987a;
-  margin-bottom: 10px;
-}
+    .table-head span {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
 
-#pct-txt { font-weight: 900; color: #c0653a; }
+    .table-head span:last-child {
+      text-align: left;
+    }
 
-.prog-track {
-  width: 100%;
-  height: 3px;
-  background: #ddd5c4;
-  border-radius: 10px;
-  overflow: hidden;
-}
+    /* Rows */
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      cursor: default;
+      transition: background 0.25s ease;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+    }
 
-.prog-bar {
-  height: 100%;
-  background: #c0653a;
-  border-radius: 10px;
-  transition: width 1s linear;
-}
+    .row:last-child { border-bottom: none; }
 
-/* Bottom note */
-.note {
-  font-size: .82rem;
-  font-weight: 300;
-  color: #b0987a;
-  line-height: 1.9;
-}
+    .row:hover {
+      background: rgba(201,168,76,0.05);
+    }
 
-.note strong {
-  color: #1a1410;
-  font-weight: 500;
-}
+    .row:hover .bar-fill {
+      filter: brightness(1.3);
+    }
 
-/* Arrived */
-#arrived {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  animation: pop .5s cubic-bezier(.18,.89,.32,1.28);
-}
-#arrived.show { display: flex; }
-@keyframes pop {
-  from { transform: scale(.8); opacity: 0; }
-  to   { transform: scale(1);  opacity: 1; }
-}
+    .row-inner {
+      display: flex;
+      align-items: center;
+      padding: 1.05rem 0;
+      gap: 1rem;
+    }
 
-/* Number change */
-@keyframes tick {
-  0%  { opacity: 0; transform: translateY(-8px); }
-  100%{ opacity: 1; transform: translateY(0);    }
-}
-.ticking { animation: tick .25s ease; }
+    /* Rank badge */
+    .rank {
+      font-family: 'Amiri', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: #fff;
+      min-width: 2.5rem;
+      line-height: 1;
+    }
 
-@media (max-width: 480px) {
-  .unit { max-width: 80px; }
-  .lbl  { font-size: .65rem; }
-}
-</style>
+    .fraction {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.02em;
+    }
+
+    /* Probability cell */
+    .prob-cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 1.05rem 0;
+    }
+
+    .prob-value {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      text-align: left;
+    }
+
+    .bar-track {
+      height: 5px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(to left, var(--gold-light), var(--gold-dim));
+      transition: width 1s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 0;
+    }
+
+    /* Row stagger delays */
+    .row:nth-child(1) { animation-delay: 0.45s; }
+    .row:nth-child(2) { animation-delay: 0.55s; }
+    .row:nth-child(3) { animation-delay: 0.65s; }
+    .row:nth-child(4) { animation-delay: 0.75s; }
+    .row:nth-child(5) { animation-delay: 0.85s; }
+    .row:nth-child(6) { animation-delay: 0.95s; }
+    .row:nth-child(7) { animation-delay: 1.05s; }
+    .row:nth-child(8) { animation-delay: 1.15s; }
+    .row:nth-child(9) { animation-delay: 1.25s; }
+
+    /* Top row highlight */
+    .row.top {
+      background: linear-gradient(90deg, rgba(201,168,76,0.06) 0%, transparent 100%);
+    }
+    .row.top .rank {
+      color: var(--gold);
+    }
+    .row.top .fraction {
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 1.8rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 1.4s;
+    }
+
+    /* Animations */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(14px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+  </style>
 </head>
 <body>
-<div class="page">
 
-  <p class="eyebrow">العد التنازلي</p>
+<div class="container">
 
-  <h1>متبقي للعطلة</h1>
-  <p class="date-line">الخميس ١٩ مارس ٢٠٢٦ &nbsp;·&nbsp; ١٠:٣٠ صباحاً</p>
-
-  <div class="countdown" id="cdwrap">
-    <div class="unit">
-      <span class="num" id="d-num">00</span>
-      <span class="lbl">أيام</span>
-    </div>
-    <div class="unit">
-      <span class="num" id="h-num">00</span>
-      <span class="lbl">ساعات</span>
-    </div>
-    <div class="unit">
-      <span class="num" id="m-num">00</span>
-      <span class="lbl">دقائق</span>
-    </div>
-    <div class="unit">
-      <span class="num" id="s-num">00</span>
-      <span class="lbl">ثواني</span>
-    </div>
+  <div class="header">
+    <div class="eyebrow">توزيع الاحتمالات</div>
+    <h1>جدول <span>العلامات</span> والاحتمالات</h1>
+    <p class="subtitle">الاحتمالات التقريبية لكل علامة من أصل ٨</p>
+    <div class="divider"><div class="divider-gem"></div></div>
   </div>
 
-  <div class="prog-wrap">
-    <div class="prog-header">
-      <span>البداية</span>
-      <span id="pct-txt">0%</span>
-      <span>العطلة 🏖️</span>
+  <div class="card">
+
+    <div class="table-head">
+      <span>العلامة</span>
+      <span>الاحتمال التقريبي</span>
     </div>
-    <div class="prog-track">
-      <div class="prog-bar" id="pbar" style="width:0%"></div>
+
+    <!-- Rows: value, fraction, percent -->
+    <div class="row top" data-pct="30">
+      <div class="row-inner">
+        <div class="rank">8</div>
+        <div class="fraction">8 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">30%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
     </div>
+
+    <div class="row" data-pct="35">
+      <div class="row-inner">
+        <div class="rank">7</div>
+        <div class="fraction">7 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">35%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="25">
+      <div class="row-inner">
+        <div class="rank">6</div>
+        <div class="fraction">6 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">25%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="6">
+      <div class="row-inner">
+        <div class="rank">5</div>
+        <div class="fraction">5 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">6%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="2">
+      <div class="row-inner">
+        <div class="rank">4</div>
+        <div class="fraction">4 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">2%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="1">
+      <div class="row-inner">
+        <div class="rank">3</div>
+        <div class="fraction">3 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">1%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="0.7">
+      <div class="row-inner">
+        <div class="rank">2</div>
+        <div class="fraction">2 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">0.7%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="0.2">
+      <div class="row-inner">
+        <div class="rank">1</div>
+        <div class="fraction">1 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">0.2%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="row" data-pct="0.1">
+      <div class="row-inner">
+        <div class="rank">0</div>
+        <div class="fraction">0 / 8</div>
+      </div>
+      <div class="prob-cell">
+        <div class="prob-value">0.1%</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+      </div>
+    </div>
+
   </div>
 
-  <p class="note" id="note">
-    <strong>قريباً جداً</strong> — استعد لعطلتك المستحقة 🌴
-  </p>
-
-  <div id="arrived">
-    <p style="font-size:3rem">🎉</p>
-    <h1>العطلة بدأت!</h1>
-    <p class="note">استمتع بكل لحظة 🌴</p>
-  </div>
+  <div class="footer">المجموع الكلي ≈ 100% &nbsp;·&nbsp; البيانات تقريبية</div>
 
 </div>
 
 <script>
-const TARGET = new Date(2026, 2, 19, 10, 30, 0);
-const START  = Date.now();
-const TOTAL  = TARGET.getTime() - START;
-const pad    = n => String(n).padStart(2,'0');
-let prev = {};
+  // Animate bars after rows appear
+  const maxPct = 35;
 
-const notes = [
-  '<strong>قريباً جداً</strong> — استعد لعطلتك المستحقة 🌴',
-  'كل ثانية تمر تقربك من الراحة ☀️',
-  'الخميس القادم — يوم تستحقه 🏖️',
-  'لا شيء يوقف الوقت عن السير نحو العطلة ⏳',
-];
-let ni = 0;
-const noteEl = document.getElementById('note');
-setInterval(() => {
-  noteEl.style.opacity = 0;
-  setTimeout(() => {
-    ni = (ni + 1) % notes.length;
-    noteEl.innerHTML = notes[ni];
-    noteEl.style.transition = 'opacity .5s';
-    noteEl.style.opacity = 1;
-  }, 400);
-}, 6000);
-
-function tick(el) {
-  el.classList.remove('ticking');
-  void el.offsetWidth;
-  el.classList.add('ticking');
-}
-
-function update() {
-  const diff = TARGET.getTime() - Date.now();
-  if (diff <= 0) {
-    document.getElementById('cdwrap').style.display = 'none';
-    document.querySelector('.prog-wrap').style.display = 'none';
-    noteEl.style.display = 'none';
-    document.getElementById('arrived').classList.add('show');
-    return;
+  function animateBars() {
+    document.querySelectorAll('.row').forEach((row, i) => {
+      const pct = parseFloat(row.dataset.pct);
+      const fill = row.querySelector('.bar-fill');
+      setTimeout(() => {
+        fill.style.width = (pct / maxPct * 100) + '%';
+      }, 500 + i * 100);
+    });
   }
 
-  const s  = Math.floor(diff / 1000);
-  const dd = Math.floor(s / 86400);
-  const hh = Math.floor((s % 86400) / 3600);
-  const mm = Math.floor((s % 3600) / 60);
-  const ss = s % 60;
-
-  const vals = { d: dd, h: hh, m: mm, s: ss };
-  for (const [k, v] of Object.entries(vals)) {
-    const el  = document.getElementById(k + '-num');
-    const str = pad(v);
-    if (str !== prev[k]) { el.textContent = str; tick(el); prev[k] = str; }
-  }
-
-  const pct = Math.min(100, ((Date.now() - START) / TOTAL) * 100);
-  document.getElementById('pbar').style.width   = pct.toFixed(2) + '%';
-  document.getElementById('pct-txt').textContent = pct.toFixed(1) + '%';
-}
-
-update();
-setInterval(update, 1000);
+  window.addEventListener('load', animateBars);
 </script>
+
 </body>
 </html>
