@@ -1,389 +1,267 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>رتيبة 🌸</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700;1,600&family=Tajawal:wght@300;400;700;900&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --rose:    #e8476a;
-      --blush:   #f7a8bb;
-      --mauve:   #9b4f6e;
-      --burgundy:#6b1f3a;
-      --cream:   #fff8f2;
-      --gold:    #d4a057;
-    }
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html, body {
-      width:100%; height:100%;
-      overflow:hidden;
-      touch-action:none;
-      -webkit-user-select:none; user-select:none;
-    }
-    body {
-      font-family:'Tajawal', sans-serif;
-      background:var(--cream);
-      display:flex; align-items:center; justify-content:center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERROR</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap');
 
-    /* BG */
-    .bg {
-      position:fixed; inset:0; z-index:0;
-      background:
-        radial-gradient(ellipse at 20% 20%, #fde8f0 0%, transparent 55%),
-        radial-gradient(ellipse at 80% 80%, #fce4d4 0%, transparent 55%),
-        var(--cream);
-    }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-    /* FLOATERS */
-    .floater {
-      position:fixed; pointer-events:none; z-index:1;
-      animation:floatUp linear infinite; opacity:0;
-    }
-    @keyframes floatUp {
-      0%  { transform:translateY(110vh) rotate(0deg);  opacity:0; }
-      6%  { opacity:.65; }
-      94% { opacity:.4; }
-      100%{ transform:translateY(-10vh) rotate(540deg); opacity:0; }
-    }
+  body {
+    min-height: 100vh;
+    background: #060608;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+  }
 
-    /* CONFETTI */
-    .conf {
-      position:fixed; pointer-events:none; z-index:999;
-      animation:confFall linear forwards;
-    }
-    @keyframes confFall {
-      0%  { transform:translateY(-30px) rotate(0deg); opacity:1; }
-      100%{ transform:translateY(105vh) rotate(900deg); opacity:0; }
-    }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
 
-    /* EXCUSE BUBBLE */
-    .excuse {
-      position:fixed; pointer-events:none; z-index:200;
-      font-size:.82rem; font-weight:700; color:var(--rose);
-      background:rgba(255,255,255,.95);
-      border:1.5px solid var(--blush);
-      border-radius:100px; padding:7px 18px;
-      white-space:nowrap;
-      animation:excusePop .85s ease forwards;
-    }
-    @keyframes excusePop {
-      0%  { opacity:0; transform:scale(.5) translateY(0); }
-      30% { opacity:1; transform:scale(1.1) translateY(-8px); }
-      100%{ opacity:0; transform:scale(.9) translateY(-50px); }
-    }
+  body::after {
+    content: '';
+    position: fixed;
+    left: 0; right: 0;
+    height: 140px;
+    background: linear-gradient(180deg, transparent, rgba(255,30,60,0.05), transparent);
+    animation: scanBeam 5s linear infinite;
+    pointer-events: none;
+    z-index: 99;
+  }
 
-    /* MAIN CARD */
-    .card {
-      position:relative; z-index:10;
-      background:rgba(255,255,255,.9);
-      backdrop-filter:blur(20px);
-      border:1.5px solid rgba(232,71,106,.18);
-      border-radius:28px;
-      padding:52px 44px 46px;
-      width:min(480px, 92vw);
-      text-align:center;
-      box-shadow:0 30px 80px rgba(107,31,58,.15);
-    }
-    .card::before { content:'✦'; position:absolute; top:14px; right:18px; color:rgba(212,160,87,.35); font-size:1.1rem; }
-    .card::after  { content:'✦'; position:absolute; bottom:14px; left:18px; color:rgba(212,160,87,.35); font-size:1.1rem; }
+  @keyframes scanBeam {
+    from { top: -140px; }
+    to   { top: 100vh; }
+  }
 
-    .main-emoji {
-      font-size:4.2rem; display:block; margin-bottom:14px;
-      animation:bounce 2s ease-in-out infinite;
-      transition: all .4s;
-    }
-    @keyframes bounce {
-      0%,100%{ transform:translateY(0); }
-      50%    { transform:translateY(-10px); }
-    }
-    .card-name {
-      font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:700;
-      font-size:2.8rem; color:var(--rose); line-height:1; margin-bottom:4px;
-    }
-    .card-question {
-      font-size:1.4rem; font-weight:900; color:var(--burgundy);
-      margin:20px 0 8px; line-height:1.5;
-      transition:all .4s;
-    }
-    .card-sub {
-      font-size:.92rem; font-weight:300; color:#7a4a5e;
-      margin-bottom:36px; transition:all .4s;
-    }
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,30,60,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,30,60,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
 
-    /* NO BUTTON */
-    .btn-no {
-      background:linear-gradient(135deg, var(--rose), var(--mauve));
-      color:#fff; border:none; border-radius:100px;
-      padding:16px 46px; font-size:1.1rem; font-weight:900;
-      font-family:'Tajawal', sans-serif; cursor:pointer;
-      box-shadow:0 10px 32px rgba(232,71,106,.4);
-      transition:transform .2s, box-shadow .2s;
-      -webkit-tap-highlight-color:transparent;
-    }
-    .btn-no:active { transform:scale(.95); }
+  .vignette {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.9) 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
 
-    /* YES BUTTON — floats freely over entire screen */
-    .btn-yes {
-      position:fixed; z-index:100;
-      background:#fff; color:var(--burgundy);
-      border:2px solid rgba(107,31,58,.2); border-radius:100px;
-      padding:15px 40px; font-size:1.05rem; font-weight:700;
-      font-family:'Tajawal', sans-serif;
-      box-shadow:0 4px 16px rgba(107,31,58,.1);
-      cursor:pointer;
-      transition:left .25s cubic-bezier(.34,1.56,.64,1),
-                 top  .25s cubic-bezier(.34,1.56,.64,1),
-                 transform .3s;
-      -webkit-tap-highlight-color:transparent;
-      touch-action:none;
-      will-change:left,top;
-    }
+  .card {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 70px;
+    max-width: 640px;
+    width: 90%;
+    border: 1px solid rgba(255,30,60,0.2);
+    background: rgba(255,10,30,0.02);
+    box-shadow: 0 0 80px rgba(255,30,60,0.07), inset 0 0 40px rgba(255,30,60,0.02);
+  }
 
-    /* LOVE SCREEN */
-    .love-screen {
-      display:none; position:fixed; inset:0; z-index:500;
-      flex-direction:column; align-items:center; justify-content:center;
-      text-align:center; padding:28px 24px;
-      background:linear-gradient(160deg,#fff0f5,#fce4d4);
-      overflow-y:auto;
-    }
-    .love-screen.show { display:flex; animation:loveIn .7s ease; }
-    @keyframes loveIn {
-      from{ opacity:0; transform:scale(.92); }
-      to  { opacity:1; transform:scale(1); }
-    }
-    .love-emoji { font-size:5rem; animation:heartPop 1s ease-in-out infinite alternate; margin-bottom:14px; }
-    @keyframes heartPop {
-      from{ transform:scale(1); }
-      to  { transform:scale(1.2); }
-    }
-    .love-title {
-      font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:700;
-      font-size:clamp(2.2rem,8vw,4rem);
-      background:linear-gradient(135deg, var(--burgundy), var(--rose), var(--gold));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      background-clip:text; margin-bottom:16px; line-height:1.1;
-    }
-    .love-sub {
-      font-size:1.05rem; font-weight:300; color:#5a2a3e;
-      line-height:2; max-width:420px; margin-bottom:28px;
-    }
-    .love-sub strong { color:var(--burgundy); font-weight:900; }
-    .love-badges {
-      display:flex; flex-wrap:wrap; gap:10px;
-      justify-content:center; margin-bottom:28px;
-    }
-    .love-badge {
-      background:white; border:2px solid var(--blush);
-      border-radius:100px; padding:9px 20px;
-      font-size:.9rem; font-weight:700; color:var(--mauve);
-      box-shadow:0 4px 14px rgba(232,71,106,.1);
-      animation:badgePop .5s ease backwards;
-    }
-    @keyframes badgePop {
-      from{ opacity:0; transform:scale(.5) translateY(20px); }
-      to  { opacity:1; transform:scale(1) translateY(0); }
-    }
-    .love-quote {
-      font-family:'Cormorant Garamond', serif; font-style:italic;
-      font-size:1.2rem; color:var(--mauve);
-      background:rgba(255,255,255,.75); backdrop-filter:blur(10px);
-      border:1px solid rgba(232,71,106,.18);
-      border-radius:16px; padding:20px 26px;
-      max-width:420px; line-height:1.8;
-    }
-  </style>
+  .card::before, .card::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    border-color: rgba(255,30,60,0.5);
+    border-style: solid;
+  }
+  .card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .card::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: rgba(255,30,60,0.3);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    direction: ltr;
+  }
+
+  /* ERROR text */
+  .error-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .error-text {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(72px, 20vw, 140px);
+    color: #ff1e3c;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-shadow:
+      0 0 20px rgba(255,30,60,1),
+      0 0 50px rgba(255,30,60,0.6),
+      0 0 100px rgba(255,30,60,0.2);
+    animation: flicker 6s infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes flicker {
+    0%,88%,100% { opacity: 1; }
+    89% { opacity: 0.5; }
+    90% { opacity: 1; }
+    92% { opacity: 0.2; }
+    93% { opacity: 1; }
+  }
+
+  .glitch-r, .glitch-c {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: clamp(72px, 20vw, 140px);
+    letter-spacing: 0.1em;
+    line-height: 1;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .glitch-r { color: #ff0033; }
+  .glitch-c { color: #00eeff; }
+
+  .glitching .glitch-r { opacity: 1; animation: gr 0.1s steps(1) forwards; }
+  .glitching .glitch-c { opacity: 1; animation: gc 0.1s steps(1) forwards; }
+
+  @keyframes gr {
+    0%  { clip-path: inset(5%  0 85% 0); transform: translate(-6px,0); }
+    33% { clip-path: inset(45% 0 35% 0); transform: translate(6px,0);  }
+    66% { clip-path: inset(70% 0 10% 0); transform: translate(-3px,0); }
+    100%{ clip-path: inset(0   0 100% 0); transform: translate(0,0);  }
+  }
+  @keyframes gc {
+    0%  { clip-path: inset(55% 0 25% 0); transform: translate(6px,0);  }
+    33% { clip-path: inset(20% 0 55% 0); transform: translate(-6px,0); }
+    66% { clip-path: inset(80% 0 8%  0); transform: translate(3px,0);  }
+    100%{ clip-path: inset(0   0 100% 0); transform: translate(0,0);   }
+  }
+
+  .error-code {
+    font-size: 11px;
+    color: rgba(255,30,60,0.4);
+    letter-spacing: 0.3em;
+    margin-bottom: 36px;
+    direction: ltr;
+    transition: opacity 0.3s;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,30,60,0.45), transparent);
+    margin: 0 auto 32px;
+    width: 75%;
+  }
+
+  .terminal {
+    background: rgba(255,20,50,0.03);
+    border: 1px solid rgba(255,30,60,0.12);
+    padding: 20px 24px;
+    text-align: left;
+    direction: ltr;
+    margin-bottom: 32px;
+  }
+
+  .t-line {
+    font-size: 11px;
+    color: rgba(255,30,60,0.5);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.4s forwards;
+  }
+  .t-line:nth-child(1) { animation-delay: 0.2s; }
+  .t-line:nth-child(2) { animation-delay: 0.6s; }
+  .t-line:nth-child(3) { animation-delay: 1.0s; }
+  .t-line:nth-child(4) { animation-delay: 1.4s; }
+  .t-line:nth-child(5) { animation-delay: 1.8s; color: rgba(255,30,60,0.85); }
+  .t-line:nth-child(6) { animation-delay: 2.3s; color: #ff1e3c; }
+
+  .t-cursor { animation: blink 1s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(6px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .arabic-label {
+    font-size: 12px;
+    color: rgba(255,30,60,0.25);
+    letter-spacing: 0.2em;
+    direction: rtl;
+  }
+</style>
 </head>
 <body>
 
-<div class="bg"></div>
+<div class="grid-bg"></div>
+<div class="vignette"></div>
 
-<!-- CARD -->
-<div class="card" id="mainCard">
-  <span class="main-emoji" id="mainEmoji">🌸</span>
-  <div class="card-name">رتيبة</div>
-  <div class="card-question" id="question">هل تكرهينني؟</div>
-  <p class="card-sub" id="subtext">فكّري جيداً قبل أن تجيبي... 😏</p>
-  <button class="btn-no" id="btnNo" onclick="pressNo()">لا، بالطبع! 💗</button>
-</div>
+<div class="card">
+  <div class="header-label">SYSTEM :: LOVE_MODULE — CRITICAL FAILURE</div>
 
-<!-- YES BUTTON (floats outside card) -->
-<button class="btn-yes" id="btnYes">نعم 😈</button>
+  <div class="error-wrap" id="errorWrap">
+    <div class="error-text">ERROR</div>
+    <div class="glitch-r">ERROR</div>
+    <div class="glitch-c">ERROR</div>
+  </div>
 
-<!-- LOVE SCREEN -->
-<div class="love-screen" id="loveScreen">
-  <div class="love-emoji">💝</div>
-  <div class="love-title">أنا أعرف! 🌸</div>
-  <p class="love-sub">
-    يا <strong>رتيبة</strong>، أنتِ لا تكرهينني لأن قلبكِ الكبير
-    مليء بالمحبة والأمل والطموح. في عيد المرأة العالمي —
-    أنتِ تستحقين كل الفرح وكل النجاح. إلى الأعلى دائماً يا نجمة! 💫
-  </p>
-  <div class="love-badges" id="loveBadges"></div>
-  <div class="love-quote">"الفتاة التي تؤمن بنفسها تغير العالم من حولها — كوني أنتِ دائماً." 🌹</div>
+  <div class="error-code" id="errCode">LOVE_NOT_FOUND :: 0x00000000</div>
+
+  <div class="divider"></div>
+
+  <div class="terminal">
+    <div class="t-line"><span style="opacity:.4">[00]</span> Initializing love.exe...</div>
+    <div class="t-line"><span style="opacity:.4">[01]</span> Searching for required source...</div>
+    <div class="t-line"><span style="opacity:.4">[02]</span> ERROR: love_source not found</div>
+    <div class="t-line"><span style="opacity:.4">[03]</span> Fallback protocol... FAILED</div>
+    <div class="t-line"><span style="opacity:.4">[04]</span> FATAL: Cannot operate without love</div>
+    <div class="t-line">&gt; System halted.<span class="t-cursor">█</span></div>
+  </div>
+
+  <div class="arabic-label">خطأ فادح — المحبة غير موجودة</div>
 </div>
 
 <script>
-// ── FLOATERS ──
-const sym=['✦','🌸','💗','✿','◆','💫','🌺'];
-const cols=['#e8476a','#d4a057','#9b4f6e','#c96a8a','#f7a8bb'];
-for(let i=0;i<16;i++){
-  const el=document.createElement('div'); el.className='floater';
-  el.textContent=sym[~~(Math.random()*sym.length)];
-  el.style.cssText=`color:${cols[~~(Math.random()*cols.length)]};left:${Math.random()*100}vw;bottom:-40px;font-size:${Math.random()*1.1+.6}rem;animation-duration:${Math.random()*12+9}s;animation-delay:${Math.random()*15}s;`;
-  document.body.appendChild(el);
-}
+  const wrap = document.getElementById('errorWrap');
+  setInterval(() => {
+    wrap.classList.add('glitching');
+    setTimeout(() => wrap.classList.remove('glitching'), 110);
+  }, 3000);
 
-// ── YES BUTTON SETUP ──
-const btnYes = document.getElementById('btnYes');
-let escapeCount = 0;
-let isMoving = false;
-let yesVisible = true;
-
-// Place yes button initially below the no button
-function initYesPos() {
-  const card = document.getElementById('mainCard').getBoundingClientRect();
-  const bw = btnYes.offsetWidth;
-  const bh = btnYes.offsetHeight;
-  // Place to the left of "no" button inside card area roughly
-  btnYes.style.left = (card.left + card.width/2 - bw - 14) + 'px';
-  btnYes.style.top  = (card.top  + card.height - bh - 46) + 'px';
-}
-window.addEventListener('load', initYesPos);
-window.addEventListener('resize', initYesPos);
-
-// ── FLEE LOGIC ──
-const FLEE_RADIUS = 110; // px — how close finger must be to trigger flee
-
-function getYesCenter(){
-  return {
-    x: parseFloat(btnYes.style.left) + btnYes.offsetWidth  / 2,
-    y: parseFloat(btnYes.style.top)  + btnYes.offsetHeight / 2
-  };
-}
-
-function fleeTo(tx, ty){
-  if(isMoving) return;
-  isMoving = true;
-  escapeCount++;
-
-  // Direction AWAY from touch
-  const cx = getYesCenter();
-  const dx = cx.x - tx;
-  const dy = cx.y - ty;
-  const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-  const nx = dx/dist; const ny = dy/dist;
-
-  // Jump distance — bigger each time
-  const jump = Math.min(200 + escapeCount*20, 350);
-  const margin = 20;
-  const bw = btnYes.offsetWidth, bh = btnYes.offsetHeight;
-
-  let newX = parseFloat(btnYes.style.left) + nx * jump;
-  let newY = parseFloat(btnYes.style.top)  + ny * jump;
-
-  // Clamp to screen
-  newX = Math.max(margin, Math.min(window.innerWidth  - bw  - margin, newX));
-  newY = Math.max(margin, Math.min(window.innerHeight - bh  - margin, newY));
-
-  btnYes.style.left = newX + 'px';
-  btnYes.style.top  = newY + 'px';
-
-  // Shrink a bit
-  const scale = Math.max(0.55, 1 - escapeCount * 0.05);
-  btnYes.style.transform = `scale(${scale})`;
-
-  showExcuse(newX, newY);
-  updateQuestion();
-
-  setTimeout(()=>{ isMoving = false; }, 320);
-}
-
-// Track finger/mouse globally
-document.addEventListener('touchmove', e=>{
-  if(!yesVisible) return;
-  const t = e.touches[0];
-  const cx = getYesCenter();
-  const dx = t.clientX - cx.x;
-  const dy = t.clientY - cx.y;
-  const dist = Math.sqrt(dx*dx + dy*dy);
-  if(dist < FLEE_RADIUS) fleeTo(t.clientX, t.clientY);
-}, {passive:true});
-
-document.addEventListener('mousemove', e=>{
-  if(!yesVisible) return;
-  const cx = getYesCenter();
-  const dx = e.clientX - cx.x;
-  const dy = e.clientY - cx.y;
-  const dist = Math.sqrt(dx*dx + dy*dy);
-  if(dist < FLEE_RADIUS) fleeTo(e.clientX, e.clientY);
-});
-
-// Also on direct tap/click on yes (just in case)
-btnYes.addEventListener('click', e=>{ e.preventDefault(); fleeTo(e.clientX, e.clientY); });
-btnYes.addEventListener('touchstart', e=>{ e.preventDefault(); const t=e.touches[0]; fleeTo(t.clientX,t.clientY); },{passive:false});
-
-// ── EXCUSES ──
-const excuses=[
-  '😱 لا لا لا!','🏃‍♀️ مش هنا!','😂 مستحيل!','🤣 ابتعدي!',
-  '😜 حاولي ثانية!','🙈 لا أريد!','😅 أرجوكِ لا!','💨 وداعاً!',
-  '🌪 لن تمسكيني!','😬 تقريباً... لكن لا!','🤪 أنا أسرع!',
-];
-function showExcuse(x,y){
-  const ex=document.createElement('div'); ex.className='excuse';
-  ex.textContent=excuses[~~(Math.random()*excuses.length)];
-  ex.style.cssText=`left:${Math.min(x, window.innerWidth-160)}px;top:${Math.max(20,y-50)}px;`;
-  document.body.appendChild(ex);
-  setTimeout(()=>ex.remove(),900);
-}
-
-// ── QUESTION STAGES ──
-const stages=[
-  {q:'هل تكرهينني؟',           s:'فكّري جيداً قبل أن تجيبي... 😏', e:'🌸'},
-  {q:'أنتِ متأكدة؟ 🤔',        s:'لا تكذبي على نفسكِ...', e:'😮'},
-  {q:'حاولي أن تمسكيني! 😂',   s:'الزر يهرب لأنه يعرف الحقيقة!', e:'😂'},
-  {q:'لا تتعبي نفسكِ! 🏃',     s:'الجواب الصحيح واضح جداً...', e:'🏃‍♀️'},
-  {q:'استسلمي للحقيقة! 💗',    s:'أنتِ تحبينني وتعرفين ذلك 🌸', e:'💗'},
-  {q:'الزر يخجل منكِ 😅',      s:'لأنه يعرف أنكِ لا تكرهينني!', e:'😅'},
-  {q:'مستحيل تمسكيني! 🎉',     s:'لأن الحقيقة هي: تحبينني! 💝', e:'🎉'},
-];
-function updateQuestion(){
-  const idx=Math.min(escapeCount-1, stages.length-1);
-  document.getElementById('question').textContent=stages[idx].q;
-  document.getElementById('subtext').textContent=stages[idx].s;
-  document.getElementById('mainEmoji').textContent=stages[idx].e;
-}
-
-// ── PRESS NO ──
-const badges=['💪 قوية','🌺 مميّزة','✨ لامعة','📚 طموحة','🦋 حرّة','🔥 شجاعة','💎 ثمينة','🌟 نجمة','👑 فريدة'];
-function pressNo(){
-  yesVisible = false;
-  btnYes.style.display='none';
-
-  // Confetti
-  const cc=['#e8476a','#f7a8bb','#d4a057','#9b4f6e','#fdd5c0','#fff'];
-  for(let i=0;i<180;i++){
-    setTimeout(()=>{
-      const c=document.createElement('div'); c.className='conf';
-      const sz=Math.random()*12+4;
-      c.style.cssText=`width:${sz}px;height:${sz*(Math.random()>.5?1:2.8)}px;background:${cc[~~(Math.random()*cc.length)]};left:${Math.random()*100}vw;top:0;animation-duration:${Math.random()*3+1.5}s;animation-delay:${Math.random()*.8}s;border-radius:${Math.random()>.5?'50%':'2px'};`;
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(),5200);
-    },i*10);
-  }
-
-  // Badges
-  const bl=document.getElementById('loveBadges');
-  badges.forEach((b,i)=>{
-    const el=document.createElement('div'); el.className='love-badge';
-    el.textContent=b; el.style.animationDelay=(i*.09+.3)+'s';
-    bl.appendChild(el);
-  });
-
-  document.getElementById('loveScreen').classList.add('show');
-}
+  const codes = [
+    'LOVE_NOT_FOUND :: 0x00000000',
+    'ERR_NO_AFFECTION :: 0xDEADHEART',
+    'NULL_POINTER :: missing_you',
+    'EXCEPTION: feelings_overflow',
+    'FATAL: حب_غير_موجود',
+  ];
+  let ci = 0;
+  setInterval(() => {
+    ci = (ci + 1) % codes.length;
+    document.getElementById('errCode').textContent = codes[ci];
+  }, 2500);
 </script>
+
 </body>
 </html>
