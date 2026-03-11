@@ -3,942 +3,1608 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ERROR — LOVE_MODULE</title>
+<title>الإعلام الآلي — السنة الأولى ثانوي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Cairo:wght@400;700&display=swap');
-
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --red: #ff1e3c;
-    --red-dim: rgba(255,30,60,0.4);
-    --red-glow: rgba(255,30,60,0.8);
-    --dark: #060608;
-    --cyan: #00eeff;
+    --primary: #0f4c81;
+    --accent: #00b4d8;
+    --gold: #f4a261;
+    --success: #2a9d8f;
+    --danger: #e63946;
+    --bg: #f0f4f8;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --code-bg: #1e293b;
   }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    min-height: 100vh;
-    background: var(--dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Share Tech Mono', monospace;
-    overflow: hidden;
-    cursor: none;
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    direction: rtl;
   }
 
-  /* Custom Cursor */
-  .cursor {
-    width: 20px;
-    height: 20px;
-    border: 2px solid var(--red);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s, opacity 0.3s;
-    mix-blend-mode: difference;
-  }
-  
-  .cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--red);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  /* Scanlines */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg, transparent, transparent 2px,
-      rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px
-    );
-    pointer-events: none;
-    z-index: 100;
-  }
-
-  /* Scan Beam */
-  body::after {
-    content: '';
-    position: fixed;
-    left: 0; right: 0;
-    height: 180px;
-    background: linear-gradient(180deg, 
-      transparent, 
-      rgba(255,30,60,0.08), 
-      transparent
-    );
-    animation: scanBeam 4s linear infinite;
-    pointer-events: none;
-    z-index: 99;
-  }
-
-  @keyframes scanBeam {
-    from { top: -180px; }
-    to   { top: 100vh; }
-  }
-
-  /* Floating Particles */
-  .particles {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    background: var(--red);
-    border-radius: 50%;
-    opacity: 0;
-    animation: floatUp 8s infinite;
-  }
-
-  @keyframes floatUp {
-    0% { opacity: 0; transform: translateY(100vh) scale(0); }
-    10% { opacity: 0.6; }
-    90% { opacity: 0.6; }
-    100% { opacity: 0; transform: translateY(-100px) scale(1); }
-  }
-
-  /* Grid Background */
-  .grid-bg {
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,30,60,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,30,60,0.04) 1px, transparent 1px);
-    background-size: 50px 50px;
-    pointer-events: none;
-    animation: gridPulse 4s ease-in-out infinite;
-  }
-
-  @keyframes gridPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-  }
-
-  /* Vignette */
-  .vignette {
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.95) 100%);
-    pointer-events: none;
-    z-index: 2;
-  }
-
-  /* Glitch Lines */
-  .glitch-lines {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 98;
-    opacity: 0;
-  }
-
-  .glitch-lines.active {
-    animation: glitchLinesAnim 0.15s steps(2) forwards;
-  }
-
-  @keyframes glitchLinesAnim {
-    0% { opacity: 1; background: repeating-linear-gradient(0deg, transparent 0, transparent 3px, var(--red) 3px, var(--red) 4px); }
-    50% { opacity: 0.5; }
-    100% { opacity: 0; }
-  }
-
-  /* Card */
-  .card {
+  /* ===== HEADER ===== */
+  header {
+    background: linear-gradient(135deg, #0f4c81 0%, #023e8a 50%, #03045e 100%);
+    color: white;
+    padding: 0;
     position: relative;
-    z-index: 10;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -20%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,180,216,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    right: -10%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(244,162,97,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header-inner {
+    position: relative;
+    z-index: 1;
+    padding: 40px 30px 30px;
     text-align: center;
-    padding: 60px 80px;
-    max-width: 720px;
-    width: 92%;
-    border: 1px solid rgba(255,30,60,0.25);
-    background: rgba(255,10,30,0.03);
-    box-shadow: 
-      0 0 100px rgba(255,30,60,0.1),
-      inset 0 0 60px rgba(255,30,60,0.03);
-    backdrop-filter: blur(5px);
-    animation: cardFloat 6s ease-in-out infinite;
   }
-
-  @keyframes cardFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-
-  .card::before, .card::after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--red);
-    border-style: solid;
-    transition: all 0.3s ease;
-  }
-  
-  .card::before { 
-    top: -1px; 
-    left: -1px; 
-    border-width: 3px 0 0 3px;
-  }
-  
-  .card::after { 
-    bottom: -1px; 
-    right: -1px; 
-    border-width: 0 3px 3px 0;
-  }
-
-  .card:hover::before,
-  .card:hover::after {
-    width: 40px;
-    height: 40px;
-  }
-
-  /* Corner Decorations */
-  .corner {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border: 2px solid var(--red-dim);
-  }
-  .corner.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
-  .corner.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
-  .corner.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
-  .corner.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
-
-  /* Header */
-  .header-label {
-    font-size: 10px;
-    letter-spacing: 0.4em;
-    color: var(--red-dim);
-    margin-bottom: 40px;
-    text-transform: uppercase;
-    direction: ltr;
-    position: relative;
+  .header-badge {
     display: inline-block;
+    background: rgba(0,180,216,0.2);
+    border: 1px solid rgba(0,180,216,0.4);
+    color: #90e0ef;
+    padding: 5px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
   }
-
-  .header-label::before,
-  .header-label::after {
-    content: '//';
-    margin: 0 10px;
-    opacity: 0.5;
-  }
-
-  /* Status Indicator */
-  .status {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 9px;
-    color: var(--red);
-    letter-spacing: 0.2em;
-  }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: statusBlink 1s infinite;
-  }
-
-  @keyframes statusBlink {
-    0%, 50% { opacity: 1; box-shadow: 0 0 10px var(--red); }
-    51%, 100% { opacity: 0.3; box-shadow: none; }
-  }
-
-  /* Heart Icon */
-  .icon-wrap {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 32px;
-  }
-
-  .heart-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .heart-ring {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: 2px solid var(--red-dim);
-    border-radius: 50%;
-    animation: ringPulse 2s ease-out infinite;
-  }
-
-  .heart-ring:nth-child(2) { animation-delay: 0.5s; }
-  .heart-ring:nth-child(3) { animation-delay: 1s; }
-
-  @keyframes ringPulse {
-    0% { transform: scale(1); opacity: 0.5; }
-    100% { transform: scale(1.8); opacity: 0; }
-  }
-
-  .heart-icon {
-    font-size: 72px;
-    line-height: 1;
-    color: var(--red);
-    filter: drop-shadow(0 0 20px var(--red-glow));
-    animation: heartBeat 1.5s ease-in-out infinite;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes heartBeat {
-    0%, 100% { transform: scale(1); }
-    15% { transform: scale(1.15); }
-    30% { transform: scale(1); }
-    45% { transform: scale(1.1); }
-    60% { transform: scale(1); }
-  }
-
-  .x-mark {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Orbitron', monospace;
+  header h1 {
+    font-size: clamp(26px, 5vw, 42px);
     font-weight: 900;
-    font-size: 48px;
-    color: #fff;
-    text-shadow: 
-      0 0 15px rgba(255,255,255,0.9),
-      0 0 30px var(--red-glow);
-    z-index: 3;
-    animation: xFloat 2s ease-in-out infinite;
-  }
-
-  @keyframes xFloat {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-3px) rotate(5deg); }
-  }
-
-  /* Broken Heart Pieces */
-  .heart-piece {
-    position: absolute;
-    font-size: 20px;
-    color: var(--red-dim);
-    opacity: 0;
-    animation: pieceFall 4s ease-in infinite;
-  }
-
-  .heart-piece:nth-child(1) { left: -20px; animation-delay: 0s; }
-  .heart-piece:nth-child(2) { right: -20px; animation-delay: 2s; }
-
-  @keyframes pieceFall {
-    0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
-    20% { opacity: 0.6; }
-    100% { opacity: 0; transform: translateY(60px) rotate(180deg); }
-  }
-
-  /* ERROR Text */
-  .error-wrap {
-    position: relative;
-    display: inline-block;
-    margin-bottom: 12px;
-  }
-
-  .error-text {
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: clamp(64px, 18vw, 130px);
-    color: var(--red);
-    letter-spacing: 0.12em;
-    line-height: 1;
-    text-shadow:
-      0 0 30px var(--red),
-      0 0 60px rgba(255,30,60,0.5),
-      0 0 120px rgba(255,30,60,0.2);
-    animation: textGlow 3s ease-in-out infinite;
-    position: relative;
-    z-index: 1;
-  }
-
-  @keyframes textGlow {
-    0%, 100% { 
-      text-shadow:
-        0 0 30px var(--red),
-        0 0 60px rgba(255,30,60,0.5);
-    }
-    50% { 
-      text-shadow:
-        0 0 50px var(--red),
-        0 0 100px rgba(255,30,60,0.7),
-        0 0 150px rgba(255,30,60,0.3);
-    }
-  }
-
-  /* Glitch Layers */
-  .glitch-layer {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: clamp(64px, 18vw, 130px);
-    letter-spacing: 0.12em;
-    line-height: 1;
-    pointer-events: none;
-    opacity: 0;
-  }
-
-  .glitch-r { color: #ff0033; }
-  .glitch-c { color: var(--cyan); }
-  .glitch-w { color: #ffffff; mix-blend-mode: overlay; }
-
-  .glitching .glitch-r {
-    opacity: 0.8;
-    animation: glitchR 0.2s steps(1) forwards;
-  }
-
-  .glitching .glitch-c {
-    opacity: 0.8;
-    animation: glitchC 0.2s steps(1) forwards;
-  }
-
-  .glitching .glitch-w {
-    opacity: 0.3;
-    animation: glitchW 0.2s steps(1) forwards;
-  }
-
-  @keyframes glitchR {
-    0%   { clip-path: inset(5% 0 85% 0);  transform: translate(-8px, 0); }
-    25%  { clip-path: inset(30% 0 50% 0); transform: translate(8px, 0); }
-    50%  { clip-path: inset(60% 0 20% 0); transform: translate(-4px, 0); }
-    75%  { clip-path: inset(80% 0 5% 0);  transform: translate(4px, 0); }
-    100% { clip-path: inset(0 0 100% 0);  transform: translate(0, 0); }
-  }
-
-  @keyframes glitchC {
-    0%   { clip-path: inset(50% 0 30% 0); transform: translate(8px, 0); }
-    25%  { clip-path: inset(15% 0 60% 0); transform: translate(-8px, 0); }
-    50%  { clip-path: inset(70% 0 10% 0); transform: translate(4px, 0); }
-    75%  { clip-path: inset(40% 0 40% 0); transform: translate(-4px, 0); }
-    100% { clip-path: inset(0 0 100% 0);  transform: translate(0, 0); }
-  }
-
-  @keyframes glitchW {
-    0%   { clip-path: inset(20% 0 70% 0); transform: translate(3px, 2px); }
-    50%  { clip-path: inset(50% 0 40% 0); transform: translate(-3px, -2px); }
-    100% { clip-path: inset(0 0 100% 0);  transform: translate(0, 0); }
-  }
-
-  /* Error Code */
-  .error-code {
-    font-size: 11px;
-    color: var(--red-dim);
-    letter-spacing: 0.35em;
-    margin-bottom: 40px;
-    direction: ltr;
-    font-family: 'Share Tech Mono', monospace;
-    transition: all 0.3s ease;
-  }
-
-  /* Progress Bar */
-  .progress-wrap {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 9px;
-    color: var(--red-dim);
+    line-height: 1.3;
     margin-bottom: 8px;
-    letter-spacing: 0.2em;
-    direction: ltr;
+  }
+  header h1 span { color: #90e0ef; }
+  header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 15px;
   }
 
-  .progress-bar {
-    height: 3px;
-    background: rgba(255,30,60,0.1);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--red), #ff6b6b);
-    width: 0%;
-    animation: progressFail 3s ease-out forwards;
-    box-shadow: 0 0 10px var(--red);
-  }
-
-  @keyframes progressFail {
-    0% { width: 0%; }
-    70% { width: 73%; }
-    75% { width: 73%; }
-    100% { width: 73%; }
-  }
-
-  /* Divider */
-  .divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--red-dim), transparent);
-    margin: 0 auto 28px;
-    width: 80%;
-    position: relative;
-  }
-
-  .divider::before {
-    content: '◆';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    color: var(--red);
-    font-size: 8px;
-    background: var(--dark);
-    padding: 0 10px;
-  }
-
-  /* Terminal */
-  .terminal {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,30,60,0.15);
-    border-radius: 4px;
-    padding: 20px 24px;
-    text-align: left;
-    direction: ltr;
-    margin-bottom: 28px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .terminal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 24px;
-    background: rgba(255,30,60,0.05);
-    border-bottom: 1px solid rgba(255,30,60,0.1);
-  }
-
-  .terminal-dots {
-    position: absolute;
-    top: 8px;
-    left: 12px;
+  /* ===== NAV TABS ===== */
+  .nav-tabs {
+    background: white;
+    border-bottom: 3px solid var(--border);
     display: flex;
+    overflow-x: auto;
+    justify-content: center;
+    gap: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  .nav-tab {
+    padding: 14px 22px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -3px;
+    transition: all 0.25s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .nav-tab:hover { color: var(--primary); background: #f8fafc; }
+  .nav-tab.active { color: var(--primary); border-bottom-color: var(--accent); }
+
+  /* ===== MAIN CONTENT ===== */
+  main { max-width: 960px; margin: 0 auto; padding: 30px 20px 60px; }
+
+  .section { display: none; animation: fadeIn 0.3s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== PAGE TITLE ===== */
+  .section-title {
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 25px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ===== LESSON CARDS ===== */
+  .lesson-card {
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: box-shadow 0.25s;
+  }
+  .lesson-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); }
+  .lesson-header {
+    background: linear-gradient(135deg, var(--primary), #023e8a);
+    color: white;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    justify-content: space-between;
+  }
+  .lesson-header-left { display: flex; align-items: center; gap: 12px; }
+  .lesson-num {
+    background: rgba(255,255,255,0.2);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .lesson-title { font-size: 17px; font-weight: 700; }
+  .lesson-subtitle { font-size: 12px; color: rgba(255,255,255,0.7); }
+  .toggle-icon { font-size: 20px; transition: transform 0.3s; }
+  .lesson-card.open .toggle-icon { transform: rotate(180deg); }
+  .lesson-body { padding: 22px; display: none; }
+  .lesson-card.open .lesson-body { display: block; }
+
+  /* ===== DEFINITION BOX ===== */
+  .def-box {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-right: 4px solid var(--accent);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+  }
+  .def-box .def-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .def-box p { font-size: 15px; line-height: 1.8; color: #1e3a5f; }
+
+  /* ===== INFO BOXES ===== */
+  .info-box {
+    background: #f0fdf4;
+    border-right: 4px solid var(--success);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .warn-box {
+    background: #fff7ed;
+    border-right: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .err-box {
+    background: #fff1f2;
+    border-right: 4px solid var(--danger);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .box-title { font-weight: 700; margin-bottom: 5px; }
+
+  /* ===== TABLE ===== */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.07);
+  }
+  .styled-table th {
+    background: var(--primary);
+    color: white;
+    padding: 12px 16px;
+    text-align: right;
+    font-weight: 700;
+  }
+  .styled-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: right;
+  }
+  .styled-table tr:nth-child(even) td { background: #f8fafc; }
+  .styled-table tr:last-child td { border-bottom: none; }
+  .tag-fr { font-family: 'Fira Code', monospace; color: var(--primary); font-weight: 600; }
+
+  /* ===== CODE BLOCK ===== */
+  .code-block {
+    background: var(--code-bg);
+    color: #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    direction: ltr;
+    text-align: left;
+    overflow-x: auto;
+    position: relative;
+  }
+  .code-block .kw { color: #93c5fd; font-weight: 600; }
+  .code-block .type { color: #86efac; }
+  .code-block .str { color: #fcd34d; }
+  .code-block .comment { color: #64748b; font-style: italic; }
+  .code-block .op { color: #f9a8d4; }
+  .code-label {
+    font-family: 'Cairo', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
     gap: 6px;
   }
-
-  .terminal-dots span {
-    width: 8px;
-    height: 8px;
+  .code-label::before {
+    content: '';
+    width: 8px; height: 8px;
     border-radius: 50%;
-    background: var(--red-dim);
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
   }
 
-  .terminal-dots span:first-child { background: #ff5f56; }
-  .terminal-dots span:nth-child(2) { background: #ffbd2e; }
-  .terminal-dots span:last-child { background: #27ca40; opacity: 0.3; }
-
-  .terminal-content {
-    margin-top: 16px;
+  /* ===== QUIZ ===== */
+  .quiz-card {
+    background: var(--card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
   }
-
-  .t-line {
-    font-size: 11px;
-    color: rgba(255,30,60,0.5);
-    margin-bottom: 6px;
-    opacity: 0;
-    animation: typeIn 0.3s forwards;
+  .quiz-q {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  .quiz-q .q-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    padding: 13px 18px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 8px;
-  }
-
-  .t-line .line-num {
-    color: rgba(255,30,60,0.3);
-    min-width: 24px;
-  }
-
-  .t-line:nth-child(1) { animation-delay: 0.3s; }
-  .t-line:nth-child(2) { animation-delay: 0.7s; }
-  .t-line:nth-child(3) { animation-delay: 1.1s; }
-  .t-line:nth-child(4) { animation-delay: 1.5s; }
-  .t-line:nth-child(5) { animation-delay: 1.9s; color: rgba(255,30,60,0.7); }
-  .t-line:nth-child(6) { animation-delay: 2.3s; color: var(--red); }
-  .t-line:nth-child(7) { animation-delay: 2.8s; color: rgba(255,30,60,0.9); }
-
-  .t-line.error { color: var(--red); }
-  .t-line.warning { color: #ffbd2e; }
-  .t-line.success { color: #27ca40; }
-
-  @keyframes typeIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
-
-  .t-cursor {
-    animation: cursorBlink 0.8s step-end infinite;
-    color: var(--red);
-  }
-
-  @keyframes cursorBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-  }
-
-  /* Arabic Message */
-  .arabic-section {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(255,30,60,0.1);
-  }
-
-  .arabic-main {
+    gap: 10px;
+    background: white;
     font-family: 'Cairo', sans-serif;
-    font-size: 18px;
+    text-align: right;
+  }
+  .option:hover { border-color: var(--accent); background: #eff9fc; }
+  .option.correct { background: #f0fdf4; border-color: var(--success); color: #166534; }
+  .option.wrong { background: #fff1f2; border-color: var(--danger); color: #9f1239; }
+  .option.disabled { cursor: default; }
+  .option .opt-letter {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex; align-items: center; justify-content: center;
     font-weight: 700;
-    color: rgba(255,30,60,0.8);
-    letter-spacing: 0.05em;
-    margin-bottom: 8px;
-    direction: rtl;
+    font-size: 13px;
+    flex-shrink: 0;
   }
-
-  .arabic-sub {
-    font-family: 'Cairo', sans-serif;
-    font-size: 11px;
-    color: rgba(255,30,60,0.35);
-    letter-spacing: 0.1em;
-    direction: rtl;
+  .option.correct .opt-letter { background: var(--success); color: white; }
+  .option.wrong .opt-letter { background: var(--danger); color: white; }
+  .quiz-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    display: none;
   }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+  .quiz-feedback.ko { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
 
-  /* Retry Button */
-  .retry-btn {
-    margin-top: 28px;
-    padding: 12px 40px;
-    background: transparent;
-    border: 1px solid var(--red-dim);
-    color: var(--red);
-    font-family: 'Orbitron', monospace;
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+  /* ===== EXAM / TEST ===== */
+  .exam-header {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    color: white;
+    border-radius: 16px 16px 0 0;
+    padding: 22px 26px;
   }
-
-  .retry-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,30,60,0.2), transparent);
-    transition: left 0.5s ease;
-  }
-
-  .retry-btn:hover {
-    border-color: var(--red);
-    box-shadow: 0 0 20px rgba(255,30,60,0.3);
-  }
-
-  .retry-btn:hover::before {
-    left: 100%;
-  }
-
-  .retry-btn:active {
-    transform: scale(0.98);
-  }
-
-  /* Audio Visualizer */
-  .visualizer {
+  .exam-header h2 { font-size: 20px; font-weight: 900; }
+  .exam-header p { color: rgba(255,255,255,0.6); font-size: 14px; margin-top: 4px; }
+  .exam-meta {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 3px;
-    height: 20px;
-    margin-top: 20px;
+    gap: 20px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .exam-meta span {
+    background: rgba(255,255,255,0.1);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .exam-body { background: white; border: 1px solid var(--border); border-top: none; border-radius: 0 0 16px 16px; padding: 26px; }
+
+  .exam-question {
+    margin-bottom: 28px;
+    padding-bottom: 28px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .exam-question:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .exam-q-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+  .exam-q-title .points {
+    background: var(--gold);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .exam-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    text-align: right;
+  }
+  .exam-input:focus { border-color: var(--accent); }
+  .exam-input.code-input { font-family: 'Fira Code', monospace; direction: ltr; text-align: left; }
+  .exam-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    outline: none;
+    background: white;
+    cursor: pointer;
+    text-align: right;
+  }
+  .exam-select:focus { border-color: var(--accent); }
+
+  .submit-btn {
+    background: linear-gradient(135deg, var(--primary), #023e8a);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 24px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(15,76,129,0.35); }
+
+  .score-card {
+    background: linear-gradient(135deg, #022c43, #0f4c81);
+    color: white;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    margin-top: 24px;
+    display: none;
+  }
+  .score-card.show { display: block; animation: fadeIn 0.4s ease; }
+  .score-big { font-size: 64px; font-weight: 900; color: #90e0ef; line-height: 1; }
+  .score-label { font-size: 18px; color: rgba(255,255,255,0.8); margin-top: 8px; }
+  .score-detail { margin-top: 20px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+  .score-detail span {
+    background: rgba(255,255,255,0.12);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
   }
 
-  .viz-bar {
-    width: 3px;
-    background: var(--red);
-    border-radius: 2px;
-    animation: vizPulse 0.8s ease-in-out infinite;
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar {
+    background: var(--border);
+    border-radius: 10px;
+    height: 8px;
+    margin: 16px 0;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--primary));
+    border-radius: 10px;
+    transition: width 0.5s ease;
   }
 
-  .viz-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
-  .viz-bar:nth-child(2) { height: 60%; animation-delay: 0.1s; }
-  .viz-bar:nth-child(3) { height: 100%; animation-delay: 0.2s; }
-  .viz-bar:nth-child(4) { height: 40%; animation-delay: 0.3s; }
-  .viz-bar:nth-child(5) { height: 80%; animation-delay: 0.4s; }
-  .viz-bar:nth-child(6) { height: 50%; animation-delay: 0.5s; }
-  .viz-bar:nth-child(7) { height: 70%; animation-delay: 0.6s; }
-
-  @keyframes vizPulse {
-    0%, 100% { transform: scaleY(1); opacity: 0.5; }
-    50% { transform: scaleY(0.3); opacity: 1; }
+  /* ===== CHIPS ===== */
+  .chip {
+    display: inline-block;
+    background: #eff6ff;
+    color: var(--primary);
+    border: 1px solid #bfdbfe;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    margin: 3px;
   }
+  .chip.fr { font-family: 'Fira Code', monospace; background: #fef3c7; color: #92400e; border-color: #fde68a; }
 
-  /* Footer */
-  .footer {
-    position: absolute;
-    bottom: 15px;
-    left: 0;
-    right: 0;
-    font-size: 8px;
-    color: rgba(255,30,60,0.2);
-    letter-spacing: 0.3em;
+  /* ===== FLOWCHART ===== */
+  .flowchart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 20px;
     direction: ltr;
   }
+  .fc-start, .fc-end {
+    background: #1e293b;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .fc-process {
+    background: #dbeafe;
+    border: 2px solid var(--primary);
+    padding: 10px 30px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    color: var(--primary);
+    min-width: 200px;
+    text-align: center;
+  }
+  .fc-io {
+    background: #fef3c7;
+    border: 2px solid #f59e0b;
+    padding: 10px 30px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    color: #92400e;
+    min-width: 200px;
+    text-align: center;
+    transform: skewX(-10deg);
+  }
+  .fc-io span { display: inline-block; transform: skewX(10deg); }
+  .fc-decision {
+    background: #dcfce7;
+    border: 2px solid var(--success);
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    color: #166534;
+    min-width: 200px;
+    text-align: center;
+    transform: rotate(45deg) scale(0.85);
+    margin: 16px 0;
+  }
+  .fc-decision span { transform: rotate(-45deg); display: inline-block; }
+  .fc-arrow {
+    width: 2px;
+    height: 24px;
+    background: #94a3b8;
+    position: relative;
+  }
+  .fc-arrow::after {
+    content: '▼';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #94a3b8;
+    font-size: 10px;
+  }
 
-  /* Responsive */
+  /* ===== RESPONSIVE ===== */
   @media (max-width: 600px) {
-    .card {
-      padding: 40px 30px;
-    }
-    
-    .heart-icon {
-      font-size: 56px;
-    }
-    
-    .x-mark {
-      font-size: 36px;
-    }
-    
-    .terminal {
-      padding: 16px;
-    }
-    
-    .t-line {
-      font-size: 10px;
-    }
+    .nav-tab { padding: 12px 14px; font-size: 13px; }
+    main { padding: 20px 15px 50px; }
+    .exam-meta { gap: 10px; }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-dot" id="cursorDot"></div>
-
-<div class="particles" id="particles"></div>
-<div class="grid-bg"></div>
-<div class="vignette"></div>
-<div class="glitch-lines" id="glitchLines"></div>
-
-<div class="card">
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
-  <div class="corner bl"></div>
-  <div class="corner br"></div>
-  
-  <div class="status">
-    <div class="status-dot"></div>
-    <span>CRITICAL</span>
-  </div>
-
-  <div class="header-label">SYSTEM :: LOVE_MODULE — CRITICAL FAILURE</div>
-
-  <div class="icon-wrap">
-    <div class="heart-container">
-      <div class="heart-ring"></div>
-      <div class="heart-ring"></div>
-      <div class="heart-ring"></div>
-      <span class="heart-icon">♥</span>
-      <div class="x-mark">✕</div>
-    </div>
-    <span class="heart-piece">♥</span>
-    <span class="heart-piece">♥</span>
-  </div>
-
-  <div class="error-wrap" id="errorWrap">
-    <div class="error-text" id="errorText">ERROR</div>
-    <div class="glitch-layer glitch-r">ERROR</div>
-    <div class="glitch-layer glitch-c">ERROR</div>
-    <div class="glitch-layer glitch-w">ERROR</div>
-  </div>
-
-  <div class="error-code" id="errCode">LOVE_NOT_FOUND :: 0x00000000</div>
-
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span>RECOVERY ATTEMPT</span>
-      <span id="progressPercent">0%</span>
-    </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressFill"></div>
+<header>
+  <div class="header-inner">
+    <div class="header-badge">📚 السنة الأولى ثانوي — جميع الشعب</div>
+    <h1>مادة <span>الإعلام الآلي</span></h1>
+    <p>دروس مشروحة · تمارين تفاعلية · اختبارات بتنقيط</p>
+    <div style="margin-top:18px; display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+      <span style="background:rgba(255,255,255,0.12);padding:6px 16px;border-radius:20px;font-size:13px;">🎯 خوارزميات</span>
+      <span style="background:rgba(255,255,255,0.12);padding:6px 16px;border-radius:20px;font-size:13px;">📝 متغيرات</span>
+      <span style="background:rgba(255,255,255,0.12);padding:6px 16px;border-radius:20px;font-size:13px;">🔄 هياكل التحكم</span>
+      <span style="background:rgba(255,255,255,0.12);padding:6px 16px;border-radius:20px;font-size:13px;">🖥️ مخططات انسيابية</span>
+      <span style="background:rgba(255,255,255,0.12);padding:6px 16px;border-radius:20px;font-size:13px;">⚙️ AlgoBox · Booléen</span>
     </div>
   </div>
+</header>
 
-  <div class="divider"></div>
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showSection('lessons')">📖 الدروس</button>
+  <button class="nav-tab" onclick="showSection('quiz')">✏️ تمارين تفاعلية</button>
+  <button class="nav-tab" onclick="showSection('exam')">📋 اختبار بتنقيط</button>
+</nav>
 
-  <div class="terminal">
-    <div class="terminal-dots">
-      <span></span>
-      <span></span>
-      <span></span>
+<main>
+
+<!-- ========== LESSONS ========== -->
+<section id="lessons" class="section active">
+  <h2 class="section-title">📖 الدروس المشروحة</h2>
+
+  <!-- LESSON 1: Algorithm Concept -->
+  <div class="lesson-card" id="l1">
+    <div class="lesson-header" onclick="toggleLesson('l1')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">١</div>
+        <div>
+          <div class="lesson-title">مفهوم الخوارزمية — Algorithme</div>
+          <div class="lesson-subtitle">التعريف · الخصائص · البنية العامة</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
     </div>
-    <div class="terminal-content">
-      <div class="t-line"><span class="line-num">00</span> Initializing love.exe...</div>
-      <div class="t-line"><span class="line-num">01</span> Searching for emotional_core...</div>
-      <div class="t-line error"><span class="line-num">02</span> ERROR: love_source not found in memory</div>
-      <div class="t-line warning"><span class="line-num">03</span> WARNING: Heart integrity compromised</div>
-      <div class="t-line error"><span class="line-num">04</span> Fallback protocol... FAILED</div>
-      <div class="t-line error"><span class="line-num">05</span> FATAL: Cannot operate without love</div>
-      <div class="t-line"><span class="line-num">&gt;</span> System halted.<span class="t-cursor">█</span></div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">تعريف</div>
+        <p>
+          <strong>الخوارزمية</strong> هي مجموعة من التعليمات المرتبة والمحدودة التي تُنفَّذ خطوة بخطوة لحل مسألة ما أو الوصول إلى نتيجة معينة.
+          <br>
+          <span style="color:var(--muted);font-size:13px;">Algorithme : suite finie et ordonnée d'instructions permettant de résoudre un problème.</span>
+        </p>
+      </div>
+
+      <div class="info-box">
+        <div class="box-title">✅ خصائص الخوارزمية الجيدة</div>
+        محدودية التعليمات · ترتيب منطقي · وضوح كل خطوة · الوصول إلى نتيجة
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">🔧 بنية الخوارزمية الأساسية:</p>
+      <div class="code-label">Syntaxe — بنية الكتابة</div>
+      <div class="code-block">
+<span class="kw">Algorithme</span>  nom_algorithme ;
+<span class="kw">Var</span>
+    nom_variable : <span class="type">type</span> ;
+<span class="kw">Début</span>
+    <span class="comment">{ instructions }</span>
+<span class="kw">Fin</span>
+      </div>
+
+      <table class="styled-table">
+        <thead><tr><th>الكلمة المحجوزة</th><th>دورها</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag-fr">Algorithme</span></td><td>تعريف اسم الخوارزمية</td></tr>
+          <tr><td><span class="tag-fr">Var</span> أو <span class="tag-fr">Variable</span></td><td>التصريح عن المتغيرات</td></tr>
+          <tr><td><span class="tag-fr">Début</span></td><td>بداية جزء التعليمات</td></tr>
+          <tr><td><span class="tag-fr">Fin</span></td><td>نهاية الخوارزمية</td></tr>
+        </tbody>
+      </table>
+
+      <div class="warn-box">
+        <div class="box-title">⚠️ ملاحظة مهمة</div>
+        يتم التصريح عن المتغيرات باستعمال الكلمة المحجوزة <span class="tag-fr">Var</span> أو <span class="tag-fr">Variable</span> — وذلك <strong>قبل</strong> الكلمة <span class="tag-fr">Début</span>، وليس داخل التعليمات.
+      </div>
     </div>
   </div>
 
-  <div class="arabic-section">
-    <div class="arabic-main">خطأ فادح — المحبة غير موجودة</div>
-    <div class="arabic-sub">لا يمكن للنظام العمل بدون مصدر للحب</div>
+  <!-- LESSON 2: Variables -->
+  <div class="lesson-card" id="l2">
+    <div class="lesson-header" onclick="toggleLesson('l2')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٢</div>
+        <div>
+          <div class="lesson-title">المتغيرات — Variables</div>
+          <div class="lesson-subtitle">التعريف · الأنواع · قواعد التسمية</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">تعريف</div>
+        <p>
+          <strong>المتغير (Variable)</strong> هو اسم يُعطى لموضع في الذاكرة يُخزَّن فيه قيمة قابلة للتغيير أثناء تنفيذ البرنامج.
+          <br>
+          <span style="color:var(--muted);font-size:13px;">Variable : emplacement mémoire repéré par un nom, pouvant contenir une valeur modifiable.</span>
+        </p>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">📋 أنواع البيانات الأساسية:</p>
+      <table class="styled-table">
+        <thead><tr><th>النوع</th><th>مثال على القيم</th><th>الاستعمال</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-fr">Entier</span></td>
+            <td>5، -3، 100</td>
+            <td>الأعداد الصحيحة</td>
+          </tr>
+          <tr>
+            <td><span class="tag-fr">Réel</span></td>
+            <td>3.14، -2.5، 6.3</td>
+            <td>الأعداد العشرية</td>
+          </tr>
+          <tr>
+            <td><span class="tag-fr">Caractère</span></td>
+            <td>'A'، 'z'، '3'</td>
+            <td>حرف واحد</td>
+          </tr>
+          <tr>
+            <td><span class="tag-fr">Chaîne</span></td>
+            <td>"Ahmed"، "Bonjour"</td>
+            <td>سلسلة نصية</td>
+          </tr>
+          <tr>
+            <td><span class="tag-fr">Booléen</span></td>
+            <td>Vrai، Faux</td>
+            <td>قيمة منطقية</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">📝 قواعد تسمية المتغيرات:</p>
+      <div class="info-box">
+        <div class="box-title">✅ قواعد صحيحة</div>
+        — يبدأ الاسم بحرف (لا برقم) <br>
+        — يحتوي على أحرف وأرقام وشرطة سفلية _ <br>
+        — لا يحتوي على مسافات <br>
+        — لا يكون كلمة محجوزة مثل Début أو Fin
+      </div>
+      <div class="err-box">
+        <div class="box-title">❌ أمثلة خاطئة</div>
+        <span class="tag-fr">2Moy_Etu</span> ← يبدأ برقم (خطأ!) &nbsp;&nbsp;|&nbsp;&nbsp;
+        <span class="tag-fr">mon nom</span> ← يحتوي مسافة (خطأ!)
+      </div>
+
+      <div class="code-label">مثال — Exemple</div>
+      <div class="code-block">
+<span class="kw">Algorithme</span>  Calcul_Moyenne ;
+<span class="kw">Var</span>
+    Note1, Note2 : <span class="type">Réel</span> ;
+    NomEleve     : <span class="type">Chaîne</span> ;
+    Age          : <span class="type">Entier</span> ;
+<span class="kw">Début</span>
+    <span class="comment">{ ... }</span>
+<span class="kw">Fin</span>
+      </div>
+    </div>
   </div>
 
-  <button class="retry-btn" id="retryBtn">RETRY CONNECTION</button>
+  <!-- LESSON 3: Instructions lire/ecrire -->
+  <div class="lesson-card" id="l3">
+    <div class="lesson-header" onclick="toggleLesson('l3')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٣</div>
+        <div>
+          <div class="lesson-title">تعليمات الإدخال والإخراج</div>
+          <div class="lesson-subtitle">lire · ecrire · الإسناد</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:18px;">
+        <div class="def-box" style="margin:0;">
+          <div class="def-label">إدخال — Lecture</div>
+          <p><strong>lire(x)</strong> — تقرأ قيمة من لوحة المفاتيح وتُخزِّنها في المتغير x</p>
+        </div>
+        <div class="def-box" style="margin:0; background:linear-gradient(135deg,#f0fdf4,#dcfce7); border-color:var(--success);">
+          <div class="def-label" style="color:var(--success);">إخراج — Écriture</div>
+          <p><strong>ecrire(x)</strong> — تعرض قيمة المتغير x على الشاشة</p>
+        </div>
+      </div>
 
-  <div class="visualizer">
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
-    <div class="viz-bar"></div>
+      <div class="info-box">
+        <div class="box-title">🔑 تعليمة الإسناد ←</div>
+        تُستعمل لإعطاء قيمة لمتغير: &nbsp;<span class="tag-fr">A ← 20</span>&nbsp; أي: ضع القيمة 20 في المتغير A
+      </div>
+
+      <div class="code-label">مثال شامل — Exemple complet</div>
+      <div class="code-block">
+<span class="kw">Algorithme</span>  Saisie_Affichage ;
+<span class="kw">Var</span>
+    S : <span class="type">Chaîne</span> ;
+    A, B, C : <span class="type">Entier</span> ;
+<span class="kw">Début</span>
+    ecrire(<span class="str">'entrez S'</span>) ;    <span class="comment">{ عرض رسالة }</span>
+    lire(S) ;              <span class="comment">{ قراءة قيمة S }</span>
+    A <span class="op">←</span> 20 ;
+    B <span class="op">←</span> A + 3 ;
+    C <span class="op">←</span> A + B ;
+    ecrire(A, B, C) ;      <span class="comment">{ عرض النتائج }</span>
+<span class="kw">Fin</span>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">📊 جدول تتبع تنفيذ الخوارزمية:</p>
+      <table class="styled-table">
+        <thead><tr><th>العملية</th><th>A</th><th>B</th><th>C</th></tr></thead>
+        <tbody>
+          <tr><td>البداية</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>A ← 20</td><td>20</td><td>—</td><td>—</td></tr>
+          <tr><td>B ← A+3</td><td>20</td><td>23</td><td>—</td></tr>
+          <tr><td>C ← A+B</td><td>20</td><td>23</td><td>43</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="footer">LOVE_MODULE v0.0.0 — CONNECTION LOST</div>
-</div>
+  <!-- LESSON 4: Conditional -->
+  <div class="lesson-card" id="l4">
+    <div class="lesson-header" onclick="toggleLesson('l4')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٤</div>
+        <div>
+          <div class="lesson-title">الهيكل الشرطي — Si...Alors</div>
+          <div class="lesson-subtitle">Si · Sinon · بنية القرار</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">تعريف</div>
+        <p>
+          الهيكل الشرطي يسمح بتنفيذ تعليمات مختلفة حسب صحة أو خطأ شرط معين.
+          <br>
+          <span style="color:var(--muted);font-size:13px;">Structure conditionnelle : permet d'exécuter des instructions différentes selon qu'une condition est vraie ou fausse.</span>
+        </p>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <div>
+          <div class="code-label">شرط بسيط</div>
+          <div class="code-block" style="font-size:13px;">
+<span class="kw">Si</span>  condition  <span class="kw">Alors</span>
+    instruction(s)
+<span class="kw">Fin Si</span>
+          </div>
+        </div>
+        <div>
+          <div class="code-label">شرط مع حالة بديلة</div>
+          <div class="code-block" style="font-size:13px;">
+<span class="kw">Si</span>  condition  <span class="kw">Alors</span>
+    instruction(s)
+<span class="kw">Sinon</span>
+    instruction(s)
+<span class="kw">Fin Si</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">🧪 مثال تطبيقي — قراءة قيمة PH:</p>
+      <div class="code-block">
+<span class="kw">Algorithme</span>  Analyse_PH ;
+<span class="kw">Var</span>  PH : <span class="type">Réel</span> ;
+<span class="kw">Début</span>
+    ecrire(<span class="str">'entrez la valeur de PH : '</span>) ;
+    lire(PH) ;
+    <span class="kw">Si</span>  PH &lt; 7  <span class="kw">Alors</span>
+        ecrire(<span class="str">'حامضي'</span>) ;
+    <span class="kw">Sinon</span>
+        <span class="kw">Si</span>  PH &gt; 7  <span class="kw">Alors</span>
+            ecrire(<span class="str">'قاعدي'</span>) ;
+        <span class="kw">Sinon</span>
+            ecrire(<span class="str">'محايد'</span>) ;
+        <span class="kw">Fin Si</span>
+    <span class="kw">Fin Si</span>
+<span class="kw">Fin</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 5: Loop -->
+  <div class="lesson-card" id="l5">
+    <div class="lesson-header" onclick="toggleLesson('l5')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٥</div>
+        <div>
+          <div class="lesson-title">هيكل التكرار — Pour...Faire</div>
+          <div class="lesson-subtitle">التكرار المحدد</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">تعريف</div>
+        <p>
+          هيكل التكرار <strong>Pour...Faire</strong> يُنفِّذ مجموعة من التعليمات عدداً محدداً من المرات.
+          <br>
+          <span style="color:var(--muted);font-size:13px;">Pour...Faire : répète un bloc d'instructions un nombre de fois déterminé à l'avance.</span>
+        </p>
+      </div>
+
+      <div class="code-label">البنية العامة</div>
+      <div class="code-block">
+<span class="kw">Pour</span>  compteur  <span class="op">←</span>  valeur_debut  <span class="kw">à</span>  valeur_fin  <span class="kw">Faire</span>
+    instruction(s) ;
+<span class="kw">Fin Pour</span>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">🧪 مثال — حساب معدل n تلميذ:</p>
+      <div class="code-block">
+<span class="kw">Algorithme</span>  Calcul_Moyennes ;
+<span class="kw">Var</span>
+    i, n, x, y, z : <span class="type">Entier</span> ;
+    moy : <span class="type">Réel</span> ;
+<span class="kw">Début</span>
+    ecrire(<span class="str">'entrer le nombre des élèves'</span>) ;
+    lire(n) ;
+    <span class="kw">Pour</span>  i  <span class="op">←</span>  1  <span class="kw">à</span>  n  <span class="kw">Faire</span>
+        ecrire(<span class="str">'entrer les notes'</span>) ;
+        lire(x, y, z) ;
+        moy  <span class="op">←</span>  (x + y + z) / 3 ;
+        ecrire(moy) ;
+    <span class="kw">Fin Pour</span>
+<span class="kw">Fin</span>
+      </div>
+
+      <div class="info-box">
+        <div class="box-title">💡 متى نستخدم Pour...Faire؟</div>
+        عندما نعرف مسبقاً عدد مرات التكرار — مثل: معالجة n تلميذ، حساب جدول ضرب، طباعة سلسلة من الأرقام.
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 6: Flowcharts -->
+  <div class="lesson-card" id="l6">
+    <div class="lesson-header" onclick="toggleLesson('l6')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٦</div>
+        <div>
+          <div class="lesson-title">المخططات الانسيابية — Organigrammes</div>
+          <div class="lesson-subtitle">الأشكال · AlgoBox · تحليل المسألة</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">تعريف</div>
+        <p>
+          <strong>المخطط الانسيابي (Organigramme)</strong> هو تمثيل بياني يساعدنا في حل المسائل والمشكلات عبر تسريع العمليات الحسابية ومن ثم القيام بإظهار النتائج — يبدأ بـ <span class="tag-fr">DEBUT</span> وينتهي بـ <span class="tag-fr">FIN</span>.
+          <br><span style="color:var(--muted);font-size:13px;">Organigramme : représentation graphique d'un algorithme à l'aide de symboles normalisés.</span>
+        </p>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">📐 رموز المخطط الانسيابي:</p>
+      <table class="styled-table">
+        <thead><tr><th>الشكل</th><th>الاسم</th><th>الدور</th></tr></thead>
+        <tbody>
+          <tr><td>🟤 بيضاوي</td><td>Début / Fin</td><td>بداية ونهاية المخطط</td></tr>
+          <tr><td>⬜ مستطيل</td><td>Traitement</td><td>عمليات المعالجة (الحسابات والإسناد)</td></tr>
+          <tr><td>◇ معيّن</td><td>Condition</td><td>اتخاذ القرار (Si / Tant que / Pour)</td></tr>
+          <tr><td>▱ متوازي الأضلاع</td><td>Lire / Ecrire</td><td>الإدخال والإخراج</td></tr>
+          <tr><td>→ سهم</td><td>Flèche (اتجاه التدفق)</td><td>يربط الأشكال ويحدد اتجاه السريان</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <div class="box-title">💻 برنامج AlgoBox</div>
+        البرنامج الذي يُستعمل في إنشاء المخططات الانسيابية يُدعى <strong>AlgoBox</strong>. في هذا البرنامج توجد الثوابت والمتغيرات فقط ولا توجد <span class="tag-fr">Var</span>.
+      </div>
+
+      <div class="warn-box">
+        <div class="box-title">⚠️ في المخططات الانسيابية</div>
+        — توجد الحلقة <span class="tag-fr">Pour</span> و <span class="tag-fr">Tant que</span> في خرائط القرار/التفرع<br>
+        — يتم الوصول بين الأشكال بإستعمال سهم يُسمى <strong>اتجاه التدفق (السريان)</strong>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">🧪 مثال — حساب مساحة الدائرة:</p>
+      <div class="info-box">
+        <div class="box-title">📌 تحليل عناصر المسألة</div>
+        <strong>المدخلات:</strong> نصف القطر R<br>
+        <strong>المعالجة:</strong> S = R² × 3.14<br>
+        <strong>المخرجات:</strong> S
+      </div>
+      <div class="code-block" style="direction:ltr;text-align:left;">
+<span class="comment">( DEBUT )</span>
+      ↓
+<span class="kw">[ Lire R ]</span>            <span class="comment">← إدخال</span>
+      ↓
+<span class="kw">[ S ← R^2 * 3.14 ]</span>   <span class="comment">← معالجة</span>
+      ↓
+<span class="kw">[ Ecrire S ]</span>          <span class="comment">← إخراج</span>
+      ↓
+<span class="comment">( FIN )</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 7: Input/Output/Processing concepts -->
+  <div class="lesson-card" id="l7">
+    <div class="lesson-header" onclick="toggleLesson('l7')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٧</div>
+        <div>
+          <div class="lesson-title">مكونات الخوارزمية الثلاثة</div>
+          <div class="lesson-subtitle">المدخلات · المعالجة · المخرجات</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px;">
+        <div style="background:#eff6ff;border:2px solid #93c5fd;border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">📥</div>
+          <div style="font-weight:700;color:#1e40af;margin-bottom:6px;">المدخلات</div>
+          <div style="font-size:12px;color:#64748b;">Entrées</div>
+          <div style="font-size:13px;margin-top:8px;">القيم التي يُدخلها المستخدم لحل المسألة</div>
+        </div>
+        <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">⚙️</div>
+          <div style="font-weight:700;color:#92400e;margin-bottom:6px;">المعالجة</div>
+          <div style="font-size:12px;color:#64748b;">Traitement</div>
+          <div style="font-size:13px;margin-top:8px;">القيام بتحديد معطيات المسألة وإجراء العمليات</div>
+        </div>
+        <div style="background:#f0fdf4;border:2px solid #86efac;border-radius:12px;padding:16px;text-align:center;">
+          <div style="font-size:28px;margin-bottom:8px;">📤</div>
+          <div style="font-weight:700;color:#166534;margin-bottom:6px;">المخرجات</div>
+          <div style="font-size:12px;color:#64748b;">Sorties</div>
+          <div style="font-size:13px;margin-top:8px;">النتائج التي تُعرض على الشاشة بعد المعالجة</div>
+        </div>
+      </div>
+
+      <div class="def-box">
+        <div class="def-label">تعريف المخططات الانسيابية</div>
+        <p>المخططات الانسيابية تحتوي على جميع <strong>مدخلات</strong> ثم <strong>عمليات</strong> ثم <strong>مخرجات</strong>. الشكل المعيّن ◇ يمثل عملية <strong>معالجة البيانات</strong> واتخاذ القرار.</p>
+      </div>
+
+      <div class="info-box">
+        <div class="box-title">🔑 الكلمات المحجوزة في الخوارزمية</div>
+        الخوارزمية هي عبارة عن <strong>كلمات محجوزة</strong>. تُستعمل الكلمة المربعة للثوابت والمتغيرات. يمكن لاسم المعرّف أن يحتوي على رموز حرفية وعددية والرمز (_) وعلى فراغات. 
+        <br><br>
+        <div class="err-box" style="margin:0;">
+          <div class="box-title">❌ تصحيح</div>
+          لا يمكن لاسم المعرّف أن يحتوي على <strong>فراغات</strong> — هذه العبارة <strong>خاطئة</strong>، التصحيح: لا يجوز وجود فراغات في أسماء المتغيرات.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LESSON 8: Affectation & Boolean trace -->
+  <div class="lesson-card" id="l8">
+    <div class="lesson-header" onclick="toggleLesson('l8')">
+      <div class="lesson-header-left">
+        <div class="lesson-num">٨</div>
+        <div>
+          <div class="lesson-title">تتبع تنفيذ الخوارزمية</div>
+          <div class="lesson-subtitle">جدول التتبع · النوع Booléen · عوامل المقارنة</div>
+        </div>
+      </div>
+      <span class="toggle-icon">▾</span>
+    </div>
+    <div class="lesson-body">
+      <div class="def-box">
+        <div class="def-label">النوع المنطقي — Booléen</div>
+        <p>
+          المتغير من نوع <span class="tag-fr">Booléen</span> لا يأخذ إلا قيمتين فقط: <strong>Vrai</strong> (صحيح) أو <strong>Faux</strong> (خاطئ).
+          ويُستعمل غالباً مع عمليات المقارنة مثل: A &gt; B أو A = B.
+        </p>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">🔢 مثال تتبع — خوارزمية Affectation:</p>
+      <div class="code-block" style="margin-bottom:16px;">
+<span class="kw">Algorithme</span>  affectation ;
+<span class="kw">Var</span>  A, B : <span class="type">Entier</span> ;  C : <span class="type">Booléen</span> ;
+<span class="kw">con</span>  D  <span class="op">←</span>  3 ;
+<span class="kw">Début</span>
+    A  <span class="op">←</span>  D * 2 ;      <span class="comment">{ A = 6 }</span>
+    B  <span class="op">←</span>  D - 1 ;      <span class="comment">{ B = 2 }</span>
+    C  <span class="op">←</span>  A &gt; B ;      <span class="comment">{ C = Vrai (6>2) }</span>
+    A  <span class="op">←</span>  B ^ D ;      <span class="comment">{ A = 2^3 = 8 }</span>
+    B  <span class="op">←</span>  D - A ;      <span class="comment">{ B = 3-8 = -5 }</span>
+    C  <span class="op">←</span>  A &lt; 0 <span class="kw">OU</span> B &gt; 0 ; <span class="comment">{ C = Faux OU Faux = Faux }</span>
+<span class="kw">Fin</span>
+      </div>
+
+      <p style="font-size:15px;font-weight:700;color:var(--primary);margin:18px 0 10px;">📊 جدول التتبع النهائي:</p>
+      <table class="styled-table">
+        <thead><tr><th>المتغير</th><th>القيمة النهائية</th><th>النوع</th></tr></thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>8</td><td><span class="tag-fr">Entier</span></td></tr>
+          <tr><td><strong>B</strong></td><td>-5</td><td><span class="tag-fr">Entier</span></td></tr>
+          <tr><td><strong>C</strong></td><td>Faux</td><td><span class="tag-fr">Booléen</span></td></tr>
+          <tr><td><strong>D (ثابت)</strong></td><td>3</td><td><span class="tag-fr">Entier</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="warn-box">
+        <div class="box-title">⚠️ الفرق بين المتغير والثابت</div>
+        <strong>المتغير (Variable)</strong>: قيمته تتغير أثناء التنفيذ<br>
+        <strong>الثابت (Constante)</strong>: يُصرَّح عنه بـ <span class="tag-fr">con</span> أو <span class="tag-fr">const</span> وقيمته لا تتغير أبداً
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========== QUIZ ========== -->
+<section id="quiz" class="section">
+  <h2 class="section-title">✏️ التمارين التفاعلية</h2>
+  <p style="color:var(--muted);margin-bottom:24px;font-size:14px;">اختر الإجابة الصحيحة — ستظهر النتيجة فوراً مع التفسير.</p>
+
+  <div id="quiz-progress">
+    <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:4px;">
+      <span>التقدم</span>
+      <span id="quiz-score-display">0 / 15</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="quiz-progress-bar" style="width:0%"></div></div>
+  </div>
+
+  <!-- Q1 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">1</span> ما الكلمة المحجوزة المستعملة للتصريح عن المتغيرات في الخوارزمية؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q1','b')"><span class="opt-letter">أ</span> Début</div>
+      <div class="option" onclick="checkQ(this,'q1','b')"><span class="opt-letter">ب</span> Var</div>
+      <div class="option" onclick="checkQ(this,'q1','b')"><span class="opt-letter">ج</span> Fin</div>
+      <div class="option" onclick="checkQ(this,'q1','b')"><span class="opt-letter">د</span> Algorithme</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">2</span> المتغير C من نوع <strong>Entier</strong> — ما القيمة التي يمكنه أخذها؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q2','c')"><span class="opt-letter">أ</span> "Bonjour"</div>
+      <div class="option" onclick="checkQ(this,'q2','c')"><span class="opt-letter">ب</span> 6.3</div>
+      <div class="option" onclick="checkQ(this,'q2','c')"><span class="opt-letter">ج</span> 15</div>
+      <div class="option" onclick="checkQ(this,'q2','c')"><span class="opt-letter">د</span> 'A'</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">3</span> أي من أسماء المتغيرات التالية صحيح؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q3','a')"><span class="opt-letter">أ</span> Moy_Eleve</div>
+      <div class="option" onclick="checkQ(this,'q3','a')"><span class="opt-letter">ب</span> 2Moy_Etu</div>
+      <div class="option" onclick="checkQ(this,'q3','a')"><span class="opt-letter">ج</span> mon nom</div>
+      <div class="option" onclick="checkQ(this,'q3','a')"><span class="opt-letter">د</span> Début</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">4</span> ما التعليمة المستعملة لإدخال قيمة من لوحة المفاتيح؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q4','b')"><span class="opt-letter">أ</span> ecrire()</div>
+      <div class="option" onclick="checkQ(this,'q4','b')"><span class="opt-letter">ب</span> lire()</div>
+      <div class="option" onclick="checkQ(this,'q4','b')"><span class="opt-letter">ج</span> afficher()</div>
+      <div class="option" onclick="checkQ(this,'q4','b')"><span class="opt-letter">د</span> saisir()</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">5</span> في الخوارزمية التالية: A←20، B←A+3 — ما قيمة B؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q5','b')"><span class="opt-letter">أ</span> 20</div>
+      <div class="option" onclick="checkQ(this,'q5','b')"><span class="opt-letter">ب</span> 23</div>
+      <div class="option" onclick="checkQ(this,'q5','b')"><span class="opt-letter">ج</span> 3</div>
+      <div class="option" onclick="checkQ(this,'q5','b')"><span class="opt-letter">د</span> 17</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">6</span> أين يوضع التصريح عن المتغيرات (Var) في الخوارزمية؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q6','a')"><span class="opt-letter">أ</span> بين Algorithme وDébut</div>
+      <div class="option" onclick="checkQ(this,'q6','a')"><span class="opt-letter">ب</span> داخل الجزء Début...Fin</div>
+      <div class="option" onclick="checkQ(this,'q6','a')"><span class="opt-letter">ج</span> بعد Fin</div>
+      <div class="option" onclick="checkQ(this,'q6','a')"><span class="opt-letter">د</span> قبل اسم الخوارزمية</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">7</span> ما نوع المتغير المناسب لتخزين القيمة 6.3؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q7','c')"><span class="opt-letter">أ</span> Entier</div>
+      <div class="option" onclick="checkQ(this,'q7','c')"><span class="opt-letter">ب</span> Caractère</div>
+      <div class="option" onclick="checkQ(this,'q7','c')"><span class="opt-letter">ج</span> Réel</div>
+      <div class="option" onclick="checkQ(this,'q7','c')"><span class="opt-letter">د</span> Booléen</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">8</span> هيكل التكرار <strong>Pour...Faire</strong> يُستخدم عندما:</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q8','b')"><span class="opt-letter">أ</span> لا نعرف عدد مرات التكرار</div>
+      <div class="option" onclick="checkQ(this,'q8','b')"><span class="opt-letter">ب</span> نعرف عدد مرات التكرار مسبقاً</div>
+      <div class="option" onclick="checkQ(this,'q8','b')"><span class="opt-letter">ج</span> نريد اتخاذ قرار</div>
+      <div class="option" onclick="checkQ(this,'q8','b')"><span class="opt-letter">د</span> نريد إدخال قيمة</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">9</span> ما التعليمة المستعملة لعرض رسالة على الشاشة؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q9','a')"><span class="opt-letter">أ</span> ecrire()</div>
+      <div class="option" onclick="checkQ(this,'q9','a')"><span class="opt-letter">ب</span> lire()</div>
+      <div class="option" onclick="checkQ(this,'q9','a')"><span class="opt-letter">ج</span> entrer()</div>
+      <div class="option" onclick="checkQ(this,'q9','a')"><span class="opt-letter">د</span> print()</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">10</span> في الخوارزمية: A←7 ، B←2 ، A←B ، B←A+B — ما قيمة B في النهاية؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q10','b')"><span class="opt-letter">أ</span> 2</div>
+      <div class="option" onclick="checkQ(this,'q10','b')"><span class="opt-letter">ب</span> 4</div>
+      <div class="option" onclick="checkQ(this,'q10','b')"><span class="opt-letter">ج</span> 7</div>
+      <div class="option" onclick="checkQ(this,'q10','b')"><span class="opt-letter">د</span> 9</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">11</span> ما الشكل المستخدم في المخطط الانسيابي لتمثيل عمليات الإدخال والإخراج؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q11','b')"><span class="opt-letter">أ</span> المستطيل ⬜</div>
+      <div class="option" onclick="checkQ(this,'q11','b')"><span class="opt-letter">ب</span> متوازي الأضلاع ▱</div>
+      <div class="option" onclick="checkQ(this,'q11','b')"><span class="opt-letter">ج</span> المعيّن ◇</div>
+      <div class="option" onclick="checkQ(this,'q11','b')"><span class="opt-letter">د</span> البيضاوي 🟤</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">12</span> البرنامج الذي يُستعمل في إنشاء المخططات الانسيابية يُدعى:</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q12','b')"><span class="opt-letter">أ</span> Python</div>
+      <div class="option" onclick="checkQ(this,'q12','b')"><span class="opt-letter">ب</span> AlgoBox</div>
+      <div class="option" onclick="checkQ(this,'q12','b')"><span class="opt-letter">ج</span> Pascal</div>
+      <div class="option" onclick="checkQ(this,'q12','b')"><span class="opt-letter">د</span> Word</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">13</span> في الخوارزمية: D=3، A←D*2 — ما قيمة A؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q13','c')"><span class="opt-letter">أ</span> 3</div>
+      <div class="option" onclick="checkQ(this,'q13','c')"><span class="opt-letter">ب</span> 5</div>
+      <div class="option" onclick="checkQ(this,'q13','c')"><span class="opt-letter">ج</span> 6</div>
+      <div class="option" onclick="checkQ(this,'q13','c')"><span class="opt-letter">د</span> 2</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">14</span> المتغير من نوع <strong>Booléen</strong> يأخذ فقط:</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q14','a')"><span class="opt-letter">أ</span> Vrai أو Faux</div>
+      <div class="option" onclick="checkQ(this,'q14','a')"><span class="opt-letter">ب</span> أعداداً صحيحة</div>
+      <div class="option" onclick="checkQ(this,'q14','a')"><span class="opt-letter">ج</span> نصوصاً</div>
+      <div class="option" onclick="checkQ(this,'q14','a')"><span class="opt-letter">د</span> أعداداً عشرية</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="quiz-card">
+    <div class="quiz-q"><span class="q-num">15</span> لحساب مساحة دائرة نصف قطرها R=5، ما قيمة S = R² × 3.14؟</div>
+    <div class="options">
+      <div class="option" onclick="checkQ(this,'q15','c')"><span class="opt-letter">أ</span> 15.7</div>
+      <div class="option" onclick="checkQ(this,'q15','c')"><span class="opt-letter">ب</span> 31.4</div>
+      <div class="option" onclick="checkQ(this,'q15','c')"><span class="opt-letter">ج</span> 78.5</div>
+      <div class="option" onclick="checkQ(this,'q15','c')"><span class="opt-letter">د</span> 25</div>
+    </div>
+    <div class="quiz-feedback" id="fb-q15"></div>
+  </div>
+
+</section>
+
+<!-- ========== EXAM ========== -->
+<section id="exam" class="section">
+  <div class="exam-header">
+    <h2>📋 اختبار تقييمي — الإعلام الآلي</h2>
+    <p>السنة الأولى ثانوي</p>
+    <div class="exam-meta">
+      <span>⏱️ المدة: 45 دقيقة</span>
+      <span>📊 العلامة: 20 نقطة</span>
+      <span>📝 الوحدات: الخوارزميات · المتغيرات · التعليمات</span>
+    </div>
+  </div>
+  <div class="exam-body">
+
+    <!-- Part 1 -->
+    <div class="exam-question">
+      <div class="exam-q-title">
+        <span class="points">4 نقاط</span>
+        <strong>التمرين الأول — صح أم خطأ وصحِّح الخطأ</strong>
+      </div>
+      <p style="margin-bottom:16px;font-size:14px;color:var(--muted);">حدد إذا كانت العبارة صحيحة أم خاطئة، وإذا كانت خاطئة اكتب التصحيح.</p>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="background:#f8fafc;border-radius:10px;padding:14px;">
+          <p style="font-size:14px;margin-bottom:10px;font-weight:600;">١. يتم التصريح عن المتغيرات في جزء التعليمات (بعد Début).</p>
+          <select class="exam-select" id="e1q1" style="width:auto;display:inline-block;">
+            <option value="">اختر...</option>
+            <option value="correct">✅ صحيح</option>
+            <option value="wrong">❌ خطأ</option>
+          </select>
+          <input class="exam-input" id="e1q1c" placeholder="التصحيح (إذا كانت خاطئة)..." style="margin-top:8px;">
+        </div>
+
+        <div style="background:#f8fafc;border-radius:10px;padding:14px;">
+          <p style="font-size:14px;margin-bottom:10px;font-weight:600;">٢. تُستعمل تعليمة <span class="tag-fr">ecrire</span> لإدخال قيم المتغيرات من لوحة المفاتيح.</p>
+          <select class="exam-select" id="e1q2" style="width:auto;display:inline-block;">
+            <option value="">اختر...</option>
+            <option value="correct">✅ صحيح</option>
+            <option value="wrong">❌ خطأ</option>
+          </select>
+          <input class="exam-input" id="e1q2c" placeholder="التصحيح (إذا كانت خاطئة)..." style="margin-top:8px;">
+        </div>
+
+        <div style="background:#f8fafc;border-radius:10px;padding:14px;">
+          <p style="font-size:14px;margin-bottom:10px;font-weight:600;">٣. الاسم <span class="tag-fr">2Moy_Etu</span> اسم متغير صحيح.</p>
+          <select class="exam-select" id="e1q3" style="width:auto;display:inline-block;">
+            <option value="">اختر...</option>
+            <option value="correct">✅ صحيح</option>
+            <option value="wrong">❌ خطأ</option>
+          </select>
+          <input class="exam-input" id="e1q3c" placeholder="التصحيح (إذا كانت خاطئة)..." style="margin-top:8px;">
+        </div>
+
+        <div style="background:#f8fafc;border-radius:10px;padding:14px;">
+          <p style="font-size:14px;margin-bottom:10px;font-weight:600;">٤. المتغير من نوع <span class="tag-fr">Entier</span> يمكنه أخذ القيمة 6.3.</p>
+          <select class="exam-select" id="e1q4" style="width:auto;display:inline-block;">
+            <option value="">اختر...</option>
+            <option value="correct">✅ صحيح</option>
+            <option value="wrong">❌ خطأ</option>
+          </select>
+          <input class="exam-input" id="e1q4c" placeholder="التصحيح (إذا كانت خاطئة)..." style="margin-top:8px;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Part 2 -->
+    <div class="exam-question">
+      <div class="exam-q-title">
+        <span class="points">6 نقاط</span>
+        <strong>التمرين الثاني — تتبع تنفيذ الخوارزمية</strong>
+      </div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:14px;">أعط قيمة كل متغير بعد تنفيذ التعليمات التالية:</p>
+      <div class="code-block" style="margin-bottom:16px;">
+A <span class="op">←</span> 5.7 ;      <span class="comment">// تعليمة 1</span>
+B <span class="op">←</span> 17 ;       <span class="comment">// تعليمة 2</span>
+C <span class="op">←</span> A + 5 ;    <span class="comment">// تعليمة 3</span>
+D <span class="op">←</span> <span class="str">"5+8"</span> ;    <span class="comment">// تعليمة 4</span>
+      </div>
+      <table class="styled-table">
+        <thead><tr><th>المتغير</th><th>القيمة</th><th>النوع</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>A</strong></td>
+            <td><input class="exam-input" id="e2a_val" placeholder="القيمة..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+            <td><input class="exam-input" id="e2a_type" placeholder="النوع..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+          </tr>
+          <tr>
+            <td><strong>B</strong></td>
+            <td><input class="exam-input" id="e2b_val" placeholder="القيمة..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+            <td><input class="exam-input" id="e2b_type" placeholder="النوع..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+          </tr>
+          <tr>
+            <td><strong>C</strong></td>
+            <td><input class="exam-input" id="e2c_val" placeholder="القيمة..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+            <td><input class="exam-input" id="e2c_type" placeholder="النوع..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+          </tr>
+          <tr>
+            <td><strong>D</strong></td>
+            <td><input class="exam-input" id="e2d_val" placeholder="القيمة..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+            <td><input class="exam-input" id="e2d_type" placeholder="النوع..." style="width:120px;display:inline-block;padding:8px 12px;"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Part 3 -->
+    <div class="exam-question">
+      <div class="exam-q-title">
+        <span class="points">6 نقاط</span>
+        <strong>التمرين الثالث — كتابة خوارزمية</strong>
+      </div>
+      <div class="info-box" style="margin-bottom:16px;">
+        <div class="box-title">📌 المسألة</div>
+        اكتب خوارزمية تقرأ ثلاث أعداد صحيحة (x، y، z)، ثم تحسب وتعرض معدلها.
+      </div>
+      <div class="code-label">اكتب الخوارزمية هنا:</div>
+      <textarea class="exam-input code-input" id="e3_algo" rows="14" 
+        placeholder="Algorithme ...&#10;Var&#10;    ...&#10;Début&#10;    ...&#10;Fin" 
+        style="resize:vertical;direction:ltr;text-align:left;font-size:13px;line-height:1.8;"></textarea>
+    </div>
+
+    <!-- Part 4 -->
+    <div class="exam-question">
+      <div class="exam-q-title">
+        <span class="points">4 نقاط</span>
+        <strong>التمرين الرابع — اختيار من متعدد (MCQ)</strong>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="background:#f8fafc;border-radius:10px;padding:16px;">
+          <p style="font-size:14px;font-weight:600;margin-bottom:10px;">١. ما البنية الصحيحة للهيكل الشرطي؟</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq1" value="a"> Si condition Début ... Fin
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq1" value="b"> Si condition Alors ... Fin Si
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq1" value="c"> Pour condition Faire ... Fin Pour
+            </label>
+          </div>
+        </div>
+
+        <div style="background:#f8fafc;border-radius:10px;padding:16px;">
+          <p style="font-size:14px;font-weight:600;margin-bottom:10px;">٢. ما نوع المتغير المناسب لتخزين الاسم "Ahmed"؟</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq2" value="a"> Entier
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq2" value="b"> Réel
+            </label>
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;">
+              <input type="radio" name="eq2" value="c"> Chaîne
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" onclick="submitExam()">
+      <span>📊</span> تسليم الاختبار وعرض النتيجة
+    </button>
+
+    <div class="score-card" id="exam-result">
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:8px;">نتيجتك في الاختبار</div>
+      <div class="score-big" id="final-score">—</div>
+      <div class="score-label">/ 20 نقطة</div>
+      <div class="score-detail" id="score-breakdown"></div>
+      <div id="exam-feedback-text" style="margin-top:20px;font-size:15px;color:rgba(255,255,255,0.85);line-height:1.8;"></div>
+    </div>
+  </div>
+</section>
+
+</main>
 
 <script>
-  // Custom Cursor
-  const cursor = document.getElementById('cursor');
-  const cursorDot = document.getElementById('cursorDot');
-  
-  document.addEventListener('mousemove', (e) => {
-    cursor.style.left = e.clientX - 10 + 'px';
-    cursor.style.top = e.clientY - 10 + 'px';
-    cursorDot.style.left = e.clientX - 3 + 'px';
-    cursorDot.style.top = e.clientY - 3 + 'px';
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ===== LESSON TOGGLE =====
+function toggleLesson(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+// Open first lesson by default
+document.getElementById('l1').classList.add('open');
+
+// ===== QUIZ LOGIC =====
+const quizAnswers = {
+  q1: { correct: 1, explain: 'الكلمة المحجوزة للتصريح عن المتغيرات هي <strong>Var</strong> (أو Variable).' },
+  q2: { correct: 2, explain: 'النوع <strong>Entier</strong> يقبل الأعداد الصحيحة فقط مثل 15. القيمة 6.3 تحتاج نوع <strong>Réel</strong>.' },
+  q3: { correct: 0, explain: '<strong>Moy_Eleve</strong> صحيح — يبدأ بحرف ولا يحتوي مسافات. أما 2Moy_Etu فيبدأ برقم.' },
+  q4: { correct: 1, explain: 'تعليمة <strong>lire()</strong> تُستعمل لقراءة/إدخال قيم من لوحة المفاتيح.' },
+  q5: { correct: 1, explain: 'A=20، ثم B = A+3 = 20+3 = <strong>23</strong>.' },
+  q6: { correct: 0, explain: 'يوضع التصريح <strong>Var</strong> بين اسم الخوارزمية والكلمة Début.' },
+  q7: { correct: 2, explain: '6.3 عدد عشري — يحتاج نوع <strong>Réel</strong>.' },
+  q8: { correct: 1, explain: '<strong>Pour...Faire</strong> يُستخدم عندما نعرف عدد مرات التكرار مسبقاً.' },
+  q9: { correct: 0, explain: 'تعليمة <strong>ecrire()</strong> تُستعمل لعرض النتائج على الشاشة.' },
+  q10: { correct: 1, explain: 'A=7، B=2، ثم A←B فA=2، ثم B←A+B = 2+2 = <strong>4</strong>.' },
+  q11: { correct: 1, explain: 'شكل <strong>متوازي الأضلاع ▱</strong> يمثل عمليات الإدخال (lire) والإخراج (ecrire).' },
+  q12: { correct: 1, explain: '<strong>AlgoBox</strong> هو البرنامج المخصص لإنشاء المخططات الانسيابية.' },
+  q13: { correct: 2, explain: 'D=3، إذن A = D×2 = 3×2 = <strong>6</strong>.' },
+  q14: { correct: 0, explain: 'النوع <strong>Booléen</strong> لا يقبل إلا قيمتين: <strong>Vrai</strong> (صحيح) أو <strong>Faux</strong> (خاطئ).' },
+  q15: { correct: 2, explain: 'S = R² × 3.14 = 25 × 3.14 = <strong>78.5</strong>.' },
+};
+
+let quizScore = 0;
+let quizAnswered = {};
+
+function checkQ(el, qid, _) {
+  if (quizAnswered[qid]) return;
+  quizAnswered[qid] = true;
+
+  const opts = el.parentElement.querySelectorAll('.option');
+  const idx = Array.from(opts).indexOf(el);
+  const ans = quizAnswers[qid];
+  const fb = document.getElementById('fb-' + qid);
+
+  opts.forEach(o => o.classList.add('disabled'));
+
+  if (idx === ans.correct) {
+    el.classList.add('correct');
+    fb.className = 'quiz-feedback show ok';
+    fb.innerHTML = '✅ إجابة صحيحة! ' + ans.explain;
+    quizScore++;
+  } else {
+    el.classList.add('wrong');
+    opts[ans.correct].classList.add('correct');
+    fb.className = 'quiz-feedback show ko';
+    fb.innerHTML = '❌ إجابة خاطئة. ' + ans.explain;
+  }
+
+  const total = Object.keys(quizAnswers).length;
+  const answered = Object.keys(quizAnswered).length;
+  document.getElementById('quiz-score-display').textContent = quizScore + ' / ' + answered;
+  document.getElementById('quiz-progress-bar').style.width = (answered / total * 100) + '%';
+}
+
+// ===== EXAM LOGIC =====
+function submitExam() {
+  let score = 0;
+  let breakdown = [];
+
+  // Part 1 — 4 points (1 each)
+  const p1answers = ['wrong','wrong','wrong','wrong']; // all false statements
+  let p1score = 0;
+  ['e1q1','e1q2','e1q3','e1q4'].forEach((id, i) => {
+    if (document.getElementById(id).value === p1answers[i]) p1score++;
   });
+  score += p1score;
+  breakdown.push('التمرين الأول: ' + p1score + '/4');
 
-  // Particles
-  const particlesContainer = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const particle = document.createElement('div');
-    particle.className = 'particle';
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.animationDelay = Math.random() * 8 + 's';
-    particle.style.animationDuration = (6 + Math.random() * 4) + 's';
-    particlesContainer.appendChild(particle);
-  }
-
-  // Glitch Effect
-  const wrap = document.getElementById('errorWrap');
-  const glitchLines = document.getElementById('glitchLines');
-  
-  function triggerGlitch() {
-    wrap.classList.add('glitching');
-    glitchLines.classList.add('active');
-    
-    setTimeout(() => {
-      wrap.classList.remove('glitching');
-      glitchLines.classList.remove('active');
-    }, 200);
-  }
-  
-  setInterval(triggerGlitch, 2500);
-
-  // Error Codes
-  const codes = [
-    'LOVE_NOT_FOUND :: 0x00000000',
-    'ERR_NO_AFFECTION :: 0xDEADHEART',
-    'NULL_POINTER :: missing_you.exe',
-    'EXCEPTION: feelings_overflow',
-    'FATAL: حب_غير_موجود :: 0xFFFF',
-    'TIMEOUT: waiting_for_love...',
-    'SEGFAULT: heart_memory_leak',
+  // Part 2 — 6 points (1.5 each pair)
+  const p2 = [
+    {val:'5.7', type:'Réel', vid:'e2a_val', tid:'e2a_type'},
+    {val:'17',  type:'Entier', vid:'e2b_val', tid:'e2b_type'},
+    {val:'10.7',type:'Réel', vid:'e2c_val', tid:'e2c_type'},
+    {val:'"5+8"',type:'Chaîne', vid:'e2d_val', tid:'e2d_type'},
   ];
-  
-  let codeIndex = 0;
-  const errCodeEl = document.getElementById('errCode');
-  
-  setInterval(() => {
-    codeIndex = (codeIndex + 1) % codes.length;
-    errCodeEl.style.opacity = '0';
-    
-    setTimeout(() => {
-      errCodeEl.textContent = codes[codeIndex];
-      errCodeEl.style.opacity = '1';
-    }, 200);
-  }, 2800);
-
-  // Progress Animation
-  const progressPercent = document.getElementById('progressPercent');
-  let percent = 0;
-  const targetPercent = 73;
-  
-  const progressInterval = setInterval(() => {
-    if (percent < targetPercent) {
-      percent += Math.random() * 5;
-      if (percent > targetPercent) percent = targetPercent;
-      progressPercent.textContent = Math.floor(percent) + '%';
-    } else {
-      clearInterval(progressInterval);
-      progressPercent.textContent = 'FAILED';
-      progressPercent.style.color = '#ff1e3c';
-    }
-  }, 100);
-
-  // Retry Button
-  const retryBtn = document.getElementById('retryBtn');
-  retryBtn.addEventListener('click', () => {
-    retryBtn.textContent = 'SEARCHING...';
-    retryBtn.disabled = true;
-    
-    setTimeout(() => {
-      triggerGlitch();
-      setTimeout(triggerGlitch, 100);
-      setTimeout(triggerGlitch, 200);
-    }, 500);
-    
-    setTimeout(() => {
-      retryBtn.textContent = 'FAILED — RETRY';
-      retryBtn.disabled = false;
-    }, 2000);
+  let p2score = 0;
+  p2.forEach(row => {
+    const v = document.getElementById(row.vid).value.trim();
+    const t = document.getElementById(row.tid).value.trim().toLowerCase();
+    if (v === row.val || v === row.val.replace(/"/g,'')) p2score += 0.75;
+    if (t === row.type.toLowerCase() || t === row.type.toLowerCase().replace('é','e')) p2score += 0.75;
   });
+  p2score = Math.min(6, Math.round(p2score * 10) / 10);
+  score += p2score;
+  breakdown.push('التمرين الثاني: ' + p2score + '/6');
 
-  // Random Micro-Glitches
-  setInterval(() => {
-    if (Math.random() > 0.7) {
-      const errorText = document.getElementById('errorText');
-      errorText.style.transform = `translate(${(Math.random() - 0.5) * 4}px, ${(Math.random() - 0.5) * 2}px)`;
-      
-      setTimeout(() => {
-        errorText.style.transform = 'translate(0, 0)';
-      }, 50);
-    }
-  }, 500);
+  // Part 3 — 6 points (rubric keywords)
+  const algo = document.getElementById('e3_algo').value.toLowerCase();
+  let p3score = 0;
+  if (algo.includes('algorithme')) p3score += 1;
+  if (algo.includes('var') || algo.includes('variable')) p3score += 1;
+  if (algo.includes('entier') || algo.includes('réel') || algo.includes('reel')) p3score += 1;
+  if (algo.includes('lire') || algo.includes('saisir')) p3score += 1;
+  if (algo.includes('(x+y+z)/3') || algo.includes('(x+y+z) /3') || algo.includes('moy') || algo.includes('moyenne')) p3score += 1;
+  if (algo.includes('ecrire') || algo.includes('afficher')) p3score += 1;
+  score += p3score;
+  breakdown.push('التمرين الثالث: ' + p3score + '/6');
+
+  // Part 4 — 4 points (2 each)
+  let p4score = 0;
+  if (document.querySelector('input[name="eq1"]:checked')?.value === 'b') p4score += 2;
+  if (document.querySelector('input[name="eq2"]:checked')?.value === 'c') p4score += 2;
+  score += p4score;
+  breakdown.push('التمرين الرابع: ' + p4score + '/4');
+
+  score = Math.min(20, Math.round(score * 10) / 10);
+
+  const result = document.getElementById('exam-result');
+  const scoreEl = document.getElementById('final-score');
+  const bdEl = document.getElementById('score-breakdown');
+  const fbEl = document.getElementById('exam-feedback-text');
+
+  scoreEl.textContent = score;
+  bdEl.innerHTML = breakdown.map(b => `<span>${b}</span>`).join('');
+
+  let msg = '';
+  if (score >= 16) msg = '🌟 ممتاز! أداء رائع — أنت مسيطر على المادة تماماً.';
+  else if (score >= 12) msg = '👍 جيد! هناك بعض النقاط تحتاج مراجعة.';
+  else if (score >= 8) msg = '📖 مقبول — راجع الدروس وحاول مرة أخرى.';
+  else msg = '💪 لا تيأس! راجع الدروس من البداية وأعد المحاولة.';
+
+  fbEl.textContent = msg;
+  result.classList.add('show');
+  result.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
-
 </body>
 </html>
